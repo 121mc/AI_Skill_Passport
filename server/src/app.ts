@@ -57,14 +57,15 @@ const errorHandler: ErrorRequestHandler = (error, _request, response, _next) => 
 
 function publicHttpErrorFrom(error: unknown): { status: number; message: string } | undefined {
   const status = numericProperty(error, "status") ?? numericProperty(error, "statusCode");
+  const message = publicMessage(error);
 
-  if (!status || status < 400 || status >= 500) {
+  if (!status || status < 400 || status >= 600 || (!message && status >= 500)) {
     return undefined;
   }
 
   return {
     status,
-    message: publicMessage(error) ?? defaultPublicMessage(status)
+    message: message ?? defaultPublicMessage(status)
   };
 }
 

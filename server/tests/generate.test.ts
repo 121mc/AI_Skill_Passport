@@ -116,7 +116,7 @@ describe("generateTaskResponse", () => {
           config: llmConfig({ mockFallback: false })
         }
       )
-    ).rejects.toThrow("provider unavailable");
+    ).rejects.toMatchObject({ publicMessage: "LLM generation failed", status: 502 });
 
     const db = await store.read();
     expect(db.sessions).toHaveLength(0);

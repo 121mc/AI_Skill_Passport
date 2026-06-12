@@ -22,7 +22,9 @@ export function createContextRouter(deps: ContextRouteDeps): Router {
     asyncHandler(async (request, response) => {
       const db = await deps.store.read();
       const body = request.body as { task?: unknown; selectedCards?: unknown } | undefined;
-      response.json(buildContextPreview(String(body?.task || ""), db.cards, parseSelectedCards(body?.selectedCards)));
+      const selectedCards = parseSelectedCards(body?.selectedCards);
+      ensureSelectedCardsExist(selectedCards, db.cards.map((card) => card.id));
+      response.json(buildContextPreview(String(body?.task || ""), db.cards, selectedCards));
     })
   );
 
@@ -83,6 +85,13 @@ function validateSelectedFields(value: unknown): SelectedCard["selectedFields"] 
     throw publicHttpError(400, "Invalid selectedCards");
   }
   return value as SelectedCard["selectedFields"];
+}
+
+export function ensureSelectedCardsExist(selectedCards: SelectedCard[], cardIds: string[]): void {
+  const knownCardIds = new Set(cardIds);
+  if (selectedCards.some((selection) => !knownCardIds.has(selection.cardId))) {
+    throw publicHttpError(400, "Unknown selected Skill Card");
+  }
 }
 
 function asyncHandler(handler: AsyncRouteHandler): RequestHandler {

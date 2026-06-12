@@ -2,7 +2,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { tmpdir } from "node:os";
 import request from "supertest";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createApp } from "../src/app.js";
 import { loadLlmConfig } from "../src/config.js";
 import { createMockFallbackAdapter } from "../src/services/llm/mockFallback.js";
@@ -169,6 +169,20 @@ describe("api routes", () => {
     expect(response.body).toEqual({ error: "Invalid selectedCards" });
   });
 
+  it("rejects context preview selections for unknown cards", async () => {
+    const app = makeTestApp();
+
+    const response = await request(app)
+      .post("/api/context/preview")
+      .send({
+        task: "Make an HCI PPT",
+        selectedCards: [{ cardId: "missing-card", mode: "all", selectedFields: [] }]
+      })
+      .expect(400);
+
+    expect(response.body).toEqual({ error: "Unknown selected Skill Card" });
+  });
+
   it("allows all-mode context preview selections without selectedFields", async () => {
     const app = makeTestApp();
 
@@ -209,6 +223,86 @@ describe("api routes", () => {
     expect(response.body.suggestedCard.name).toBe("HCI Project Demo Outline");
   });
 
+  it("returns a safe public error when generation config is missing and fallback is disabled", async () => {
+    const app = makeTestApp({
+      config: {
+        ...loadLlmConfig({}),
+        apiKey: "",
+        model: "",
+        mockFallback: false
+      }
+    });
+
+    const response = await request(app)
+      .post("/api/generate")
+      .send({
+        task: "Make an HCI PPT outline",
+        selectedCards: [{ cardId: "classroom-presentation", mode: "all", selectedFields: [] }]
+      })
+      .expect(503);
+
+    expect(response.body).toEqual({ error: "LLM configuration is missing" });
+    expect(response.text).not.toContain("secret");
+    expect(response.text).not.toContain("LLM_API_KEY=");
+  });
+
+  it("returns a safe public error when the LLM provider fails and fallback is disabled", async () => {
+    const app = makeTestApp({
+      adapter: {
+        generate: vi.fn(async () => {
+          throw new Error("provider unavailable with sk-test-secret");
+        })
+      },
+      config: {
+        ...loadLlmConfig({}),
+        apiKey: "sk-test-secret",
+        model: "demo-model",
+        mockFallback: false
+      }
+    });
+
+    const response = await request(app)
+      .post("/api/generate")
+      .send({
+        task: "Make an HCI PPT outline",
+        selectedCards: [{ cardId: "classroom-presentation", mode: "all", selectedFields: [] }]
+      })
+      .expect(502);
+
+    expect(response.body).toEqual({ error: "LLM generation failed" });
+    expect(response.text).not.toContain("provider unavailable");
+    expect(response.text).not.toContain("sk-test-secret");
+  });
+
+  it("rejects generate selections for unknown cards without persisting a session", async () => {
+    const dbPath = path.join(tempDir, "db.json");
+    const store = createJsonStore({
+      dbPath,
+      seedCardsPath: path.resolve("src/data/seedCards.json")
+    });
+    const app = createApp({
+      store,
+      adapter: createMockFallbackAdapter(),
+      config: {
+        ...loadLlmConfig({}),
+        mockFallback: true
+      },
+      clientOrigin: "http://localhost:5173"
+    });
+
+    const response = await request(app)
+      .post("/api/generate")
+      .send({
+        task: "Make an HCI PPT outline",
+        selectedCards: [{ cardId: "missing-card", mode: "all", selectedFields: [] }]
+      })
+      .expect(400);
+    const db = await store.read();
+
+    expect(response.body).toEqual({ error: "Unknown selected Skill Card" });
+    expect(db.sessions).toHaveLength(0);
+  });
+
   it("rejects malformed generate selections without persisting a session", async () => {
     const dbPath = path.join(tempDir, "db.json");
     const store = createJsonStore({
@@ -239,7 +333,7 @@ describe("api routes", () => {
   });
 });
 
-function makeTestApp(options: { dbPath?: string; config?: ReturnType<typeof loadLlmConfig> } = {}) {
+function makeTestApp(options: { adapter?: ReturnType<typeof createMockFallbackAdapter>; dbPath?: string; config?: ReturnType<typeof loadLlmConfig> } = {}) {
   const store = createJsonStore({
     dbPath: options.dbPath ?? path.join(tempDir, "db.json"),
     seedCardsPath: path.resolve("src/data/seedCards.json")
@@ -247,7 +341,7 @@ function makeTestApp(options: { dbPath?: string; config?: ReturnType<typeof load
 
   return createApp({
     store,
-    adapter: createMockFallbackAdapter(),
+    adapter: options.adapter ?? createMockFallbackAdapter(),
     config: options.config ?? {
       ...loadLlmConfig({}),
       mockFallback: true

@@ -44,7 +44,7 @@ export async function generateTaskResponse(input: GenerateInput, deps: GenerateD
 
   try {
     if (!deps.config.apiKey || !deps.config.model) {
-      throw new Error("LLM configuration is missing.");
+      throw publicHttpError(503, "LLM configuration is missing");
     }
     const result = await deps.adapter.generate({ messages, temperature: 0.4, maxTokens: 1200 });
     output = result.text;
@@ -52,6 +52,12 @@ export async function generateTaskResponse(input: GenerateInput, deps: GenerateD
     model = result.model;
   } catch (error) {
     if (!deps.config.mockFallback) {
+      if (isPublicHttpError(error)) {
+        throw error;
+      }
+      throw publicHttpError(502, "LLM generation failed");
+    }
+    if (isPublicHttpError(error) && error.status !== 503) {
       throw error;
     }
     usedFallback = true;
@@ -104,6 +110,20 @@ export async function generateTaskResponse(input: GenerateInput, deps: GenerateD
     usedFallback,
     suggestedCard
   };
+}
+
+function publicHttpError(status: number, publicMessage: string): Error & { status: number; publicMessage: string } {
+  return Object.assign(new Error(publicMessage), { status, publicMessage });
+}
+
+function isPublicHttpError(error: unknown): error is Error & { status: number; publicMessage: string } {
+  return (
+    error instanceof Error &&
+    "status" in error &&
+    typeof (error as { status?: unknown }).status === "number" &&
+    "publicMessage" in error &&
+    typeof (error as { publicMessage?: unknown }).publicMessage === "string"
+  );
 }
 
 function event(

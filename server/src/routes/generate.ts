@@ -4,7 +4,7 @@ import type { LlmConfig } from "../config.js";
 import { generateTaskResponse } from "../services/generate.js";
 import type { LlmAdapter } from "../services/llm/types.js";
 import type { JsonStore } from "../services/store.js";
-import { parseSelectedCards } from "./context.js";
+import { ensureSelectedCardsExist, parseSelectedCards } from "./context.js";
 
 type GenerateRouteDeps = {
   store: JsonStore;
@@ -21,10 +21,13 @@ export function createGenerateRouter(deps: GenerateRouteDeps): Router {
     "/",
     asyncHandler(async (request, response) => {
       const body = request.body as { task?: unknown; selectedCards?: unknown } | undefined;
+      const selectedCards = parseSelectedCards(body?.selectedCards);
+      const db = await deps.store.read();
+      ensureSelectedCardsExist(selectedCards, db.cards.map((card) => card.id));
       const result = await generateTaskResponse(
         {
           task: String(body?.task || ""),
-          selectedCards: parseSelectedCards(body?.selectedCards)
+          selectedCards
         },
         deps
       );
