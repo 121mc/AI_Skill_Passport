@@ -87,6 +87,7 @@ export async function generateTaskResponse(input: GenerateInput, deps: GenerateD
           card.usageCount += 1;
           card.lastUsedAt = session.createdAt;
           card.updatedAt = session.createdAt;
+          writeDb.timeline.unshift(event("used", "Used Skill Card", card.name, { cardId: card.id, taskSessionId: sessionId }));
         }
       }
     }

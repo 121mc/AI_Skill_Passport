@@ -177,6 +177,14 @@ describe("generateTaskResponse", () => {
     expect(classroomAfter?.lastUsedAt).toBeDefined();
     expect(temporaryAfter?.usageCount).toBe(temporaryBefore?.usageCount);
     expect(temporaryAfter?.lastUsedAt).toBe(temporaryBefore?.lastUsedAt);
+
+    const usedEvents = after.timeline.filter((event) => event.type === "used");
+    expect(usedEvents).toHaveLength(1);
+    expect(usedEvents[0]).toMatchObject({
+      cardId: "classroom-presentation",
+      detail: "Classroom Presentation",
+      title: "Used Skill Card"
+    });
   });
 
   it("persists successful generation as a completed session", async () => {
