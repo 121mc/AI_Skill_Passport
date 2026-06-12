@@ -2,7 +2,8 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
-import type { GenerateResponse, Recommendation, SkillCard } from "@shared/types";
+import type { GenerateResponse, MemoryEvent, Recommendation, ShareLink, SkillCard } from "@shared/types";
+import type { HealthResponse } from "./api/client";
 
 const sampleCard: SkillCard = {
   id: "card-1",
@@ -61,6 +62,29 @@ const sampleGenerateResponse: GenerateResponse = {
   model: "fallback-demo",
   usedFallback: true,
   suggestedCard
+};
+
+const sampleShare: ShareLink = {
+  id: "share-1",
+  cardId: sampleCard.id,
+  snapshot: {
+    ...sampleCard,
+    privacy: "link",
+    usageCount: 3,
+    lastUsedAt: "2026-06-12T03:00:00.000Z"
+  },
+  createdAt: "2026-06-12T04:00:00.000Z",
+  expiresAt: "2026-06-19T04:00:00.000Z",
+  importCount: 2
+};
+
+const sampleTimelineEvent: MemoryEvent = {
+  id: "event-1",
+  type: "imported",
+  cardId: sampleCard.id,
+  title: "Imported shared Skill Card",
+  detail: sampleCard.name,
+  createdAt: "2026-06-12T05:00:00.000Z"
 };
 
 type MockJsonResponse<T> = {
@@ -618,5 +642,171 @@ describe("App", () => {
 
     expect(screen.queryByText("Generated PPT outline")).not.toBeInTheDocument();
     expect(screen.getByText("idle generate")).toBeInTheDocument();
+  });
+
+  it("previews a share snapshot and imports or forks it", async () => {
+    const user = userEvent.setup();
+    const requests: Array<{ body: unknown; method: string; url: string }> = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+        const url = String(input);
+        const method = init?.method || "GET";
+        requests.push({ body: init?.body ? JSON.parse(String(init.body)) : undefined, method, url });
+
+        if (method === "GET" && url.endsWith("/share/share-1")) {
+          return okJson(sampleShare);
+        }
+
+        if (method === "POST" && url.endsWith("/share/share-1/import")) {
+          return okJson({ ...sampleCard, id: "imported-1", name: "Imported Workshop" });
+        }
+
+        if (method === "POST" && url.endsWith("/share/share-1/fork")) {
+          return okJson({ ...sampleCard, id: "fork-1", name: "Workshop Writer Fork" });
+        }
+
+        throw new Error(`Unexpected request: ${method} ${url}`);
+      })
+    );
+    window.history.pushState({}, "", "/share/share-1");
+
+    render(<App />);
+
+    expect(await screen.findByRole("heading", { name: sampleCard.name })).toBeInTheDocument();
+    expect(screen.getByText(sampleCard.description)).toBeInTheDocument();
+    expect(screen.getByText("Link share")).toBeInTheDocument();
+    expect(screen.getByText("Preview-only snapshot")).toBeInTheDocument();
+    expect(screen.getByText("draft brief")).toBeInTheDocument();
+    expect(screen.getByText("3 uses")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /Import/i }));
+    expect(await screen.findByText("Imported as Imported Workshop.")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /Fork and Edit/i }));
+    expect(await screen.findByText("Forked as Workshop Writer Fork.")).toBeInTheDocument();
+    expect(requests.find((request) => request.url.endsWith("/fork"))).toMatchObject({
+      body: { name: "Workshop Writer Fork", privacy: "private" },
+      method: "POST"
+    });
+  });
+
+  it("ignores stale share preview loads when the share route changes", async () => {
+    const slowShare = createDeferred<MockJsonResponse<ShareLink>>();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+
+        if (url.endsWith("/share/share-1")) {
+          return slowShare.promise;
+        }
+
+        if (url.endsWith("/share/share-2")) {
+          return okJson({
+            ...sampleShare,
+            id: "share-2",
+            snapshot: { ...secondCard, privacy: "public" }
+          });
+        }
+
+        throw new Error(`Unexpected request: ${url}`);
+      })
+    );
+    window.history.pushState({}, "", "/share/share-1");
+
+    render(<App />);
+    expect(screen.getByText("Loading share preview...")).toBeInTheDocument();
+
+    act(() => {
+      window.history.pushState({}, "", "/share/share-2");
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+
+    expect(await screen.findByRole("heading", { name: secondCard.name })).toBeInTheDocument();
+
+    await act(async () => {
+      slowShare.resolve(okJson(sampleShare));
+      await slowShare.promise;
+    });
+
+    expect(screen.getByRole("heading", { name: secondCard.name })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: sampleCard.name })).not.toBeInTheDocument();
+  });
+
+  it("shows timeline events and an empty timeline distinctly", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+
+        if (url.endsWith("/timeline")) {
+          return okJson([sampleTimelineEvent]);
+        }
+
+        throw new Error(`Unexpected request: ${url}`);
+      })
+    );
+    window.history.pushState({}, "", "/timeline");
+
+    const { unmount } = render(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Memory Timeline" })).toBeInTheDocument();
+    expect(screen.getByText("Imported shared Skill Card")).toBeInTheDocument();
+    expect(screen.getByText(sampleCard.name)).toBeInTheDocument();
+    expect(screen.getByText("imported")).toBeInTheDocument();
+
+    unmount();
+    vi.stubGlobal("fetch", vi.fn(async () => okJson([])));
+    render(<App />);
+
+    expect(await screen.findByText("No memory events yet.")).toBeInTheDocument();
+  });
+
+  it("keeps the newest settings health refresh when responses finish out of order", async () => {
+    const user = userEvent.setup();
+    const slowRefresh = createDeferred<MockJsonResponse<HealthResponse>>();
+    let healthRequestCount = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+
+        if (url.endsWith("/health")) {
+          healthRequestCount += 1;
+
+          if (healthRequestCount === 1) {
+            return okJson({ fallbackEnabled: true, modelConfigured: false, ok: true, provider: "initial-provider" });
+          }
+
+          if (healthRequestCount === 2) {
+            return slowRefresh.promise;
+          }
+
+          return okJson({ fallbackEnabled: false, modelConfigured: true, ok: true, provider: "new-provider" });
+        }
+
+        throw new Error(`Unexpected request: ${url}`);
+      })
+    );
+    window.history.pushState({}, "", "/settings");
+
+    render(<App />);
+
+    expect(await screen.findByText("initial-provider")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /Refresh/i }));
+    await user.click(screen.getByRole("button", { name: /Refresh/i }));
+
+    expect(await screen.findByText("new-provider")).toBeInTheDocument();
+
+    await act(async () => {
+      slowRefresh.resolve(okJson({ fallbackEnabled: true, modelConfigured: false, ok: false, provider: "stale-provider" }));
+      await slowRefresh.promise;
+    });
+
+    expect(screen.getByText("new-provider")).toBeInTheDocument();
+    expect(screen.queryByText("stale-provider")).not.toBeInTheDocument();
+    expect(screen.getByText("Browser never receives LLM_API_KEY. API keys stay backend-only.")).toBeInTheDocument();
   });
 });
