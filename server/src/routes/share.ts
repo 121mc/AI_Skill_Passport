@@ -18,6 +18,7 @@ const compatibilityFields = ["chat", "ppt", "writing", "coding"] as const;
 const forkPatchFields = new Set([
   "name",
   "description",
+  "presetPrompt",
   "scenarios",
   "tone",
   "structure",
@@ -116,6 +117,9 @@ function parseForkPatch(body: unknown): CardPatch {
   }
   if ("description" in value) {
     patch.description = requiredString(value, "description", "Invalid Skill Card patch");
+  }
+  if ("presetPrompt" in value) {
+    patch.presetPrompt = requiredString(value, "presetPrompt", "Invalid Skill Card patch");
   }
   for (const field of arrayFields) {
     if (field in value) {

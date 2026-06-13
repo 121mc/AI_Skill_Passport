@@ -90,7 +90,7 @@ describe("api routes", () => {
     const card = await request(app).get("/api/cards/classroom-presentation").expect(200);
 
     expect(card.body.id).toBe("classroom-presentation");
-    expect(card.body.name).toBe("Classroom Presentation");
+    expect(card.body.name).toBe("课堂展示助手");
   });
 
   it("rejects card patches that try to mutate usageCount", async () => {
@@ -151,7 +151,7 @@ describe("api routes", () => {
       })
       .expect(200);
 
-    expect(response.body.context).toContain("Classroom Presentation");
+    expect(response.body.context).toContain("课堂展示助手");
     expect(response.body.appliedCards[0].fields).toContain("tone");
   });
 
@@ -194,7 +194,7 @@ describe("api routes", () => {
       })
       .expect(200);
 
-    expect(response.body.context).toContain("Classroom Presentation");
+    expect(response.body.context).toContain("课堂展示助手");
     expect(response.body.appliedCards[0].fields).toContain("tone");
   });
 
@@ -220,7 +220,8 @@ describe("api routes", () => {
       .expect(200);
 
     expect(response.body.usedFallback).toBe(true);
-    expect(response.body.suggestedCard.name).toBe("HCI Project Demo Outline");
+    expect(response.body.suggestedCard.name).toBe("HCI 项目展示大纲");
+    expect(response.body.suggestedCard.presetPrompt).toContain("只输出文本");
   });
 
   it("returns a safe public error when generation config is missing and fallback is disabled", async () => {

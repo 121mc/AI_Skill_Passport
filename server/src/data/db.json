@@ -1,6 +1,1207 @@
 {
-  "cards": [],
-  "shares": [],
-  "sessions": [],
-  "timeline": []
+  "cards": [
+    {
+      "id": "classroom-presentation",
+      "name": "课堂展示助手",
+      "description": "用于 HCI 或课程汇报，生成清晰、自然、有课堂感的文本型展示大纲。",
+      "presetPrompt": "请根据主题“AI Skill Passport”撰写一份 8 页 HCI 课程项目展示大纲，只输出文本。要求每页包含标题、核心信息和讲述要点，不要生成图片、PPT 文件或代码。",
+      "scenarios": [
+        "PPT",
+        "课程展示",
+        "HCI 汇报",
+        "课堂汇报",
+        "项目展示"
+      ],
+      "tone": [
+        "正式但不僵硬",
+        "自然、清晰、有课堂感"
+      ],
+      "structure": [
+        "背景",
+        "问题",
+        "概念",
+        "交互流程",
+        "价值",
+        "总结"
+      ],
+      "styleRules": [
+        "每一页只讲一个核心观点",
+        "信息层级清楚",
+        "避免长段落",
+        "用流程和卡片化解释帮助理解"
+      ],
+      "constraints": [
+        "避免空泛口号",
+        "让没有项目背景的课程听众也能听懂",
+        "只生成可复制的文本内容"
+      ],
+      "examples": [
+        "8 页 HCI 项目展示大纲",
+        "问题-方案-价值的展示讲述路径"
+      ],
+      "tags": [
+        "ppt",
+        "presentation",
+        "hci",
+        "course",
+        "课堂",
+        "展示"
+      ],
+      "privacy": "private",
+      "compatibility": {
+        "chat": 84,
+        "ppt": 98,
+        "writing": 72,
+        "coding": 20
+      },
+      "usageCount": 5,
+      "createdAt": "2026-06-12T09:00:00.000Z",
+      "updatedAt": "2026-06-13T07:20:49.415Z",
+      "lastUsedAt": "2026-06-13T07:20:49.415Z"
+    },
+    {
+      "id": "defense-presentation",
+      "name": "答辩表达助手",
+      "description": "围绕证据、方法、贡献和局限组织研究答辩或项目答辩文本。",
+      "presetPrompt": "请围绕我的研究项目生成一份中文答辩陈述稿，只输出文本。内容包含研究问题、方法、证据、贡献与局限，不要生成幻灯片文件或图片。",
+      "scenarios": [
+        "论文答辩",
+        "研究汇报",
+        "项目答辩",
+        "答辩"
+      ],
+      "tone": [
+        "自信",
+        "证据先行",
+        "面对提问时保持冷静"
+      ],
+      "structure": [
+        "研究问题",
+        "方法",
+        "结果",
+        "贡献",
+        "局限"
+      ],
+      "styleRules": [
+        "突出问题-方案逻辑",
+        "先给证据再下结论",
+        "用文字描述方法与结果图示"
+      ],
+      "constraints": [
+        "不要夸大贡献",
+        "明确说明局限",
+        "只输出答辩可朗读文本"
+      ],
+      "examples": [
+        "答辩陈述稿提纲",
+        "研究贡献总结"
+      ],
+      "tags": [
+        "defense",
+        "research",
+        "method",
+        "evidence",
+        "答辩"
+      ],
+      "privacy": "private",
+      "compatibility": {
+        "chat": 76,
+        "ppt": 92,
+        "writing": 80,
+        "coding": 18
+      },
+      "usageCount": 3,
+      "createdAt": "2026-06-12T09:05:00.000Z",
+      "updatedAt": "2026-06-13T07:24:19.145Z",
+      "lastUsedAt": "2026-06-13T07:24:19.145Z"
+    },
+    {
+      "id": "formal-chinese-email",
+      "name": "中文邮件助手",
+      "description": "生成目的明确、措辞礼貌、收尾自然的中文邮件或正式消息。",
+      "presetPrompt": "请帮我写一封中文邮件，只输出文本。语气礼貌简洁，包含称呼、来意、关键信息、请求和收尾，不要添加不存在的个人隐私。",
+      "scenarios": [
+        "邮件",
+        "给老师留言",
+        "工作请求",
+        "中文邮件"
+      ],
+      "tone": [
+        "礼貌",
+        "简洁",
+        "尊重对方时间"
+      ],
+      "structure": [
+        "称呼",
+        "来意",
+        "关键信息",
+        "明确请求",
+        "收尾"
+      ],
+      "styleRules": [
+        "尽早说明请求",
+        "避免过度解释",
+        "收尾温和但简短"
+      ],
+      "constraints": [
+        "不要显得强硬催促",
+        "不要添加隐私细节",
+        "只输出可直接发送的文本"
+      ],
+      "examples": [
+        "给老师请求反馈的邮件",
+        "正式协作请求"
+      ],
+      "tags": [
+        "email",
+        "writing",
+        "chinese",
+        "中文",
+        "礼貌"
+      ],
+      "privacy": "private",
+      "compatibility": {
+        "chat": 88,
+        "ppt": 20,
+        "writing": 96,
+        "coding": 10
+      },
+      "usageCount": 8,
+      "createdAt": "2026-06-12T09:10:00.000Z",
+      "updatedAt": "2026-06-13T08:47:51.067Z",
+      "lastUsedAt": "2026-06-13T08:47:51.067Z"
+    },
+    {
+      "id": "minimal-visual-style",
+      "name": "开放设计文本助手",
+      "description": "把视觉或界面方案写成克制、开放、可执行的文本说明，强调层级、留白和组件节奏。",
+      "presetPrompt": "请为一个界面或展示方案生成开放设计风格的中文文案说明，只输出文本。重点描述信息层级、留白、组件节奏和可执行的视觉规则，不要生成图片或设计文件。",
+      "scenarios": [
+        "幻灯片",
+        "仪表盘",
+        "海报",
+        "视觉设计",
+        "开放设计",
+        "极简视觉"
+      ],
+      "tone": [
+        "干净",
+        "直接",
+        "安静但有判断力"
+      ],
+      "structure": [
+        "每个区块一个核心信息",
+        "清晰的浏览路径",
+        "细节之后给出总结"
+      ],
+      "styleRules": [
+        "颜色克制但不单调",
+        "留白明确",
+        "减少装饰性噪音",
+        "先建立层级再添加风格"
+      ],
+      "constraints": [
+        "避免空洞的审美形容词",
+        "每条视觉建议都要可执行",
+        "只输出文字说明"
+      ],
+      "examples": [
+        "开放设计风格说明",
+        "卡片式仪表盘文案结构"
+      ],
+      "tags": [
+        "minimal",
+        "visual",
+        "ppt",
+        "design",
+        "style",
+        "极简",
+        "开放设计"
+      ],
+      "privacy": "link",
+      "compatibility": {
+        "chat": 62,
+        "ppt": 94,
+        "writing": 66,
+        "coding": 24
+      },
+      "usageCount": 3,
+      "createdAt": "2026-06-12T09:15:00.000Z",
+      "updatedAt": "2026-06-13T07:14:50.808Z",
+      "lastUsedAt": "2026-06-13T07:14:50.808Z"
+    },
+    {
+      "name": "HCI Project Demo Outline",
+      "description": "Reusable habit distilled from this task and selected cards: Classroom Presentation, Minimal Visual Style, Defense Presentation.",
+      "scenarios": [
+        "HCI project presentation",
+        "course demo",
+        "PPT outline"
+      ],
+      "tone": [
+        "formal but natural",
+        "clear and user-controlled"
+      ],
+      "structure": [
+        "background",
+        "problem",
+        "concept",
+        "interaction flow",
+        "HCI value",
+        "sharing and import",
+        "summary"
+      ],
+      "styleRules": [
+        "make selected habits visible",
+        "keep each section concise",
+        "avoid dense paragraphs"
+      ],
+      "constraints": [
+        "do not save automatically without user confirmation",
+        "show how user control affects the output"
+      ],
+      "examples": [
+        "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。"
+      ],
+      "tags": [
+        "hci",
+        "ppt",
+        "demo",
+        "outline"
+      ],
+      "privacy": "private",
+      "compatibility": {
+        "chat": 70,
+        "ppt": 70,
+        "writing": 70,
+        "coding": 20
+      },
+      "id": "card_551fd340-8a4e-4d1f-9a54-a0d250ad175e",
+      "usageCount": 0,
+      "createdAt": "2026-06-13T07:15:06.959Z",
+      "updatedAt": "2026-06-13T07:15:06.959Z"
+    }
+  ],
+  "shares": [
+    {
+      "id": "share_af54f52e-edf3-42f8-bf5a-0782cd9742c6",
+      "cardId": "classroom-presentation",
+      "snapshot": {
+        "id": "classroom-presentation",
+        "name": "Classroom Presentation",
+        "description": "Builds clear HCI or course presentation outlines with a formal but natural classroom tone.",
+        "scenarios": [
+          "PPT",
+          "course presentation",
+          "HCI report",
+          "课堂汇报",
+          "项目展示"
+        ],
+        "tone": [
+          "formal but not stiff",
+          "自然、清晰、有课堂感"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "value",
+          "summary"
+        ],
+        "styleRules": [
+          "one key idea per slide",
+          "visible hierarchy",
+          "avoid long paragraphs",
+          "use process and card-based explanations"
+        ],
+        "constraints": [
+          "avoid empty slogans",
+          "make every slide understandable to a course audience"
+        ],
+        "examples": [
+          "8-slide HCI project outline",
+          "problem-solution-value presentation flow"
+        ],
+        "tags": [
+          "ppt",
+          "presentation",
+          "hci",
+          "course",
+          "课堂",
+          "展示"
+        ],
+        "privacy": "private",
+        "compatibility": {
+          "chat": 84,
+          "ppt": 98,
+          "writing": 72,
+          "coding": 20
+        },
+        "usageCount": 3,
+        "createdAt": "2026-06-12T09:00:00.000Z",
+        "updatedAt": "2026-06-12T09:00:00.000Z",
+        "lastUsedAt": "2026-06-12T10:00:00.000Z"
+      },
+      "createdAt": "2026-06-13T07:13:33.050Z",
+      "importCount": 0
+    },
+    {
+      "id": "share_05fbb362-8b66-4c78-b33f-2700e73a6549",
+      "cardId": "classroom-presentation",
+      "snapshot": {
+        "id": "classroom-presentation",
+        "name": "Classroom Presentation",
+        "description": "Builds clear HCI or course presentation outlines with a formal but natural classroom tone.",
+        "scenarios": [
+          "PPT",
+          "course presentation",
+          "HCI report",
+          "课堂汇报",
+          "项目展示"
+        ],
+        "tone": [
+          "formal but not stiff",
+          "自然、清晰、有课堂感"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "value",
+          "summary"
+        ],
+        "styleRules": [
+          "one key idea per slide",
+          "visible hierarchy",
+          "avoid long paragraphs",
+          "use process and card-based explanations"
+        ],
+        "constraints": [
+          "avoid empty slogans",
+          "make every slide understandable to a course audience"
+        ],
+        "examples": [
+          "8-slide HCI project outline",
+          "problem-solution-value presentation flow"
+        ],
+        "tags": [
+          "ppt",
+          "presentation",
+          "hci",
+          "course",
+          "课堂",
+          "展示"
+        ],
+        "privacy": "private",
+        "compatibility": {
+          "chat": 84,
+          "ppt": 98,
+          "writing": 72,
+          "coding": 20
+        },
+        "usageCount": 3,
+        "createdAt": "2026-06-12T09:00:00.000Z",
+        "updatedAt": "2026-06-12T09:00:00.000Z",
+        "lastUsedAt": "2026-06-12T10:00:00.000Z"
+      },
+      "createdAt": "2026-06-13T07:13:32.893Z",
+      "importCount": 0
+    },
+    {
+      "id": "share_cfbfbf41-d8fd-4cde-a525-ea291a6d682f",
+      "cardId": "classroom-presentation",
+      "snapshot": {
+        "id": "classroom-presentation",
+        "name": "Classroom Presentation",
+        "description": "Builds clear HCI or course presentation outlines with a formal but natural classroom tone.",
+        "scenarios": [
+          "PPT",
+          "course presentation",
+          "HCI report",
+          "课堂汇报",
+          "项目展示"
+        ],
+        "tone": [
+          "formal but not stiff",
+          "自然、清晰、有课堂感"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "value",
+          "summary"
+        ],
+        "styleRules": [
+          "one key idea per slide",
+          "visible hierarchy",
+          "avoid long paragraphs",
+          "use process and card-based explanations"
+        ],
+        "constraints": [
+          "avoid empty slogans",
+          "make every slide understandable to a course audience"
+        ],
+        "examples": [
+          "8-slide HCI project outline",
+          "problem-solution-value presentation flow"
+        ],
+        "tags": [
+          "ppt",
+          "presentation",
+          "hci",
+          "course",
+          "课堂",
+          "展示"
+        ],
+        "privacy": "private",
+        "compatibility": {
+          "chat": 84,
+          "ppt": 98,
+          "writing": 72,
+          "coding": 20
+        },
+        "usageCount": 3,
+        "createdAt": "2026-06-12T09:00:00.000Z",
+        "updatedAt": "2026-06-12T09:00:00.000Z",
+        "lastUsedAt": "2026-06-12T10:00:00.000Z"
+      },
+      "createdAt": "2026-06-13T07:13:32.543Z",
+      "importCount": 0
+    },
+    {
+      "id": "share_ec272bd9-4392-463c-be97-1cc138552fae",
+      "cardId": "classroom-presentation",
+      "snapshot": {
+        "id": "classroom-presentation",
+        "name": "Classroom Presentation",
+        "description": "Builds clear HCI or course presentation outlines with a formal but natural classroom tone.",
+        "scenarios": [
+          "PPT",
+          "course presentation",
+          "HCI report",
+          "课堂汇报",
+          "项目展示"
+        ],
+        "tone": [
+          "formal but not stiff",
+          "自然、清晰、有课堂感"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "value",
+          "summary"
+        ],
+        "styleRules": [
+          "one key idea per slide",
+          "visible hierarchy",
+          "avoid long paragraphs",
+          "use process and card-based explanations"
+        ],
+        "constraints": [
+          "avoid empty slogans",
+          "make every slide understandable to a course audience"
+        ],
+        "examples": [
+          "8-slide HCI project outline",
+          "problem-solution-value presentation flow"
+        ],
+        "tags": [
+          "ppt",
+          "presentation",
+          "hci",
+          "course",
+          "课堂",
+          "展示"
+        ],
+        "privacy": "private",
+        "compatibility": {
+          "chat": 84,
+          "ppt": 98,
+          "writing": 72,
+          "coding": 20
+        },
+        "usageCount": 3,
+        "createdAt": "2026-06-12T09:00:00.000Z",
+        "updatedAt": "2026-06-12T09:00:00.000Z",
+        "lastUsedAt": "2026-06-12T10:00:00.000Z"
+      },
+      "createdAt": "2026-06-13T07:13:31.255Z",
+      "importCount": 0
+    }
+  ],
+  "sessions": [
+    {
+      "id": "session_c1954d78-890c-4844-8042-e63183a38c21",
+      "userTask": "请帮我写一封中文邮件，只输出文本。语气礼貌简洁，包含称呼、来意、关键信息、请求和收尾，不要添加不存在的个人隐私。",
+      "selectedCards": [
+        {
+          "cardId": "formal-chinese-email",
+          "mode": "all",
+          "selectedFields": []
+        }
+      ],
+      "generatedContext": "用户选择的 AI 工作习惯:\n[技能卡片: 中文邮件助手]\n应用方式: 全部应用\n适用场景: 邮件, 给老师留言, 工作请求, 中文邮件\n预设提示词: 请帮我写一封中文邮件，只输出文本。语气礼貌简洁，包含称呼、来意、关键信息、请求和收尾，不要添加不存在的个人隐私。\n语气: 礼貌; 简洁; 尊重对方时间\n结构: 称呼 -> 来意 -> 关键信息 -> 明确请求 -> 收尾\n风格规则: 尽早说明请求; 避免过度解释; 收尾温和但简短\n约束: 不要显得强硬催促; 不要添加隐私细节; 只输出可直接发送的文本\n示例: 给老师请求反馈的邮件; 正式协作请求\n\n控制规则:\n- 当前任务与长期习惯冲突时，以当前任务为准。\n- 部分应用只包含用户勾选的字段。\n- 仅本次任务不会自动保存为长期习惯。\n- 新习惯建议必须由用户明确确认后才能保存。\n- 当前 AI 接入只生成文本，请不要要求生成图片、PPT 文件或其他非文本产物。\n\n当前任务:\n请帮我写一封中文邮件，只输出文本。语气礼貌简洁，包含称呼、来意、关键信息、请求和收尾，不要添加不存在的个人隐私。",
+      "modelProvider": "openai-compatible",
+      "modelName": "DeepSeek-V4-Pro",
+      "output": "王老师您好：\n\n我是您《数据分析》课程的学生，想就期中报告的修改方向向您请教。目前已完成初稿，但不确定分析框架是否合理，希望能得到您的简要反馈。\n\n方便的话，可否请您在周四前通过邮件或办公时间指点一二？如有需要补充的材料，我会提前准备。\n\n感谢您的时间，祝工作顺利。",
+      "status": "completed",
+      "usedFallback": false,
+      "suggestedCard": {
+        "name": "可复用任务提纲",
+        "description": "从本次任务和已选择卡片中提炼出的可复用习惯：中文邮件助手。",
+        "presetPrompt": "请基于当前任务生成一份结构化中文文本，只输出文本。请给出清晰步骤、可复制内容和必要注意事项，不要生成文件或图片。",
+        "scenarios": [
+          "AI 任务规划",
+          "结构化输出"
+        ],
+        "tone": [
+          "正式但自然",
+          "清晰且体现用户控制"
+        ],
+        "structure": [
+          "背景",
+          "任务",
+          "结构化回答",
+          "下一步"
+        ],
+        "styleRules": [
+          "让已选择习惯在输出中可见",
+          "每个部分保持简洁",
+          "避免密集长段落"
+        ],
+        "constraints": [
+          "未经用户确认不要自动保存",
+          "说明用户控制如何影响输出",
+          "只输出文本"
+        ],
+        "examples": [
+          "请帮我写一封中文邮件，只输出文本。语气礼貌简洁，包含称呼、来意、关键信息、请求和收尾，不要添加不存在的个人隐私。"
+        ],
+        "tags": [
+          "task",
+          "outline",
+          "habit",
+          "文本"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T08:47:51.067Z"
+    },
+    {
+      "id": "session_c0e668e7-cf87-4974-ab0c-568654a8c9f7",
+      "userTask": "帮我写一分钟的演讲稿用于",
+      "selectedCards": [
+        {
+          "cardId": "defense-presentation",
+          "mode": "partial",
+          "selectedFields": [
+            "styleRules",
+            "structure",
+            "tone",
+            "constraints",
+            "examples"
+          ]
+        }
+      ],
+      "generatedContext": "User-selected AI work habits:\n[Skill Card: Defense Presentation]\nApply mode: partial\nScenarios: thesis defense, research presentation, project defense, 答辩\nTone: confident; evidence-led; calm under questioning\nStructure: research question -> method -> result -> contribution -> limitation\nStyle rules: emphasize problem-solution logic; show evidence before claims; use diagrams for method and results\nConstraints: do not overclaim; make limitations explicit\nExamples: defense script outline; research contribution summary\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我写一分钟的演讲稿用于",
+      "modelProvider": "openai-compatible",
+      "modelName": "DeepSeek-V4-Pro",
+      "output": "各位老师好，我的研究问题是：如何在不牺牲识别精度的前提下，让图像分类模型在边缘设备上实现实时推理？现有模型参数量大、计算耗时，难以部署。\n\n针对这一问题，我提出了一种基于通道剪枝与知识蒸馏的轻量级网络结构。方法上，先用L1正则化筛选重要通道，再让轻量学生网络学习教师网络的软标签分布。实验在ImageNet子集上进行，结果显示：模型参数量减少76%，推理速度提升3.2倍，而Top-1准确率仅下降0.8个百分点。这张图（指向示意图）对比了剪枝前后的精度-速度曲线，可以直观看到我们的方法在同等精度下速度最优。\n\n主要贡献在于，为资源受限场景提供了一套可复现的压缩方案，且无需专用硬件。但我也要明确指出局限性：第一，对长尾类别识别率下降较明显，约2.3%；第二，目前仅在ARM Cortex-A系列CPU上验证，跨平台泛化性有待进一步测试。以上是我的汇报，请各位老师批评指正。",
+      "status": "completed",
+      "usedFallback": false,
+      "suggestedCard": {
+        "name": "Reusable Task Outline",
+        "description": "Reusable habit distilled from this task and selected cards: Defense Presentation.",
+        "scenarios": [
+          "AI task planning",
+          "structured output"
+        ],
+        "tone": [
+          "formal but natural",
+          "clear and user-controlled"
+        ],
+        "structure": [
+          "context",
+          "task",
+          "structured answer",
+          "next step"
+        ],
+        "styleRules": [
+          "make selected habits visible",
+          "keep each section concise",
+          "avoid dense paragraphs"
+        ],
+        "constraints": [
+          "do not save automatically without user confirmation",
+          "show how user control affects the output"
+        ],
+        "examples": [
+          "帮我写一分钟的演讲稿用于"
+        ],
+        "tags": [
+          "task",
+          "outline",
+          "habit"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T07:24:19.145Z"
+    },
+    {
+      "id": "session_940fbf48-8b6b-4f1f-a03c-2cbd968e4c79",
+      "userTask": "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "selectedCards": [
+        {
+          "cardId": "classroom-presentation",
+          "mode": "all",
+          "selectedFields": []
+        }
+      ],
+      "generatedContext": "User-selected AI work habits:\n[Skill Card: Classroom Presentation]\nApply mode: all\nScenarios: PPT, course presentation, HCI report, 课堂汇报, 项目展示\nTone: formal but not stiff; 自然、清晰、有课堂感\nStructure: background -> problem -> concept -> interaction flow -> value -> summary\nStyle rules: one key idea per slide; visible hierarchy; avoid long paragraphs; use process and card-based explanations\nConstraints: avoid empty slogans; make every slide understandable to a course audience\nExamples: 8-slide HCI project outline; problem-solution-value presentation flow\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "modelProvider": "mock",
+      "modelName": "mock-fallback",
+      "output": "[Fallback content] This response was generated locally because the real LLM provider was unavailable or not configured.\n\n1. Title: AI Skill Passport\n2. Background: Users repeat collaboration preferences across AI tasks.\n3. Problem: Habits stay hidden inside old prompts and are hard to reuse.\n4. Concept: Skill Cards turn reusable habits into editable, selectable objects.\n5. Flow: Create cards, receive recommendations, select full or partial use, preview context, generate with the model.\n6. HCI Value: User control, transparency, privacy, and transferable routines.\n7. Sharing: Snapshot links allow preview, import, and fork without exposing the original private card.\n8. Summary: The demo proves that visible habits can shape model output while keeping users in control.\n\nOriginal task: User-selected AI work habits:\n[Skill Card: Classroom Presentation]\nApply mode: all\nScenarios: PPT, course presentation, HCI report, 课堂汇报, 项目展示\nTone: formal but not stiff; 自然、清晰、有课堂感\nStructure: background -> problem -> concept -> interaction flow -> value -> summary\nStyle rules: one key idea per slide; visible hierarchy; avoid long paragraphs; use process and card-based explanations\nConstraints: avoid empty slogans; make every slide understandable to a course audience\nExamples: 8-slide HCI project outline; problem-solution-value presentation flow\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "status": "completed",
+      "usedFallback": true,
+      "suggestedCard": {
+        "name": "HCI Project Demo Outline",
+        "description": "Reusable habit distilled from this task and selected cards: Classroom Presentation.",
+        "scenarios": [
+          "HCI project presentation",
+          "course demo",
+          "PPT outline"
+        ],
+        "tone": [
+          "formal but natural",
+          "clear and user-controlled"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "HCI value",
+          "sharing and import",
+          "summary"
+        ],
+        "styleRules": [
+          "make selected habits visible",
+          "keep each section concise",
+          "avoid dense paragraphs"
+        ],
+        "constraints": [
+          "do not save automatically without user confirmation",
+          "show how user control affects the output"
+        ],
+        "examples": [
+          "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。"
+        ],
+        "tags": [
+          "hci",
+          "ppt",
+          "demo",
+          "outline"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T07:20:49.415Z"
+    },
+    {
+      "id": "session_8bcd3a39-3e28-4a27-9674-385ab05b6c33",
+      "userTask": "11111",
+      "selectedCards": [
+        {
+          "cardId": "formal-chinese-email",
+          "mode": "all",
+          "selectedFields": []
+        }
+      ],
+      "generatedContext": "User-selected AI work habits:\n[Skill Card: Formal Chinese Email]\nApply mode: all\nScenarios: email, teacher message, work request, 中文邮件\nTone: polite; concise; respectful\nStructure: greeting -> purpose -> key points -> request -> closing\nStyle rules: state the request early; avoid over-explaining; keep the closing warm but brief\nConstraints: do not sound pushy; do not add private personal details\nExamples: email to an instructor; formal request for feedback\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n11111",
+      "modelProvider": "mock",
+      "modelName": "mock-fallback",
+      "output": "[Fallback content] This response was generated locally because the real LLM provider was unavailable or not configured.\n\n1. Title: AI Skill Passport\n2. Background: Users repeat collaboration preferences across AI tasks.\n3. Problem: Habits stay hidden inside old prompts and are hard to reuse.\n4. Concept: Skill Cards turn reusable habits into editable, selectable objects.\n5. Flow: Create cards, receive recommendations, select full or partial use, preview context, generate with the model.\n6. HCI Value: User control, transparency, privacy, and transferable routines.\n7. Sharing: Snapshot links allow preview, import, and fork without exposing the original private card.\n8. Summary: The demo proves that visible habits can shape model output while keeping users in control.\n\nOriginal task: User-selected AI work habits:\n[Skill Card: Formal Chinese Email]\nApply mode: all\nScenarios: email, teacher message, work request, 中文邮件\nTone: polite; concise; respectful\nStructure: greeting -> purpose -> key points -> request -> closing\nStyle rules: state the request early; avoid over-explaining; keep the closing warm but brief\nConstraints: do not sound pushy; do not add private personal details\nExamples: email to an instructor; formal request for feedback\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n11111",
+      "status": "completed",
+      "usedFallback": true,
+      "suggestedCard": {
+        "name": "Reusable Task Outline",
+        "description": "Reusable habit distilled from this task and selected cards: Formal Chinese Email.",
+        "scenarios": [
+          "AI task planning",
+          "structured output"
+        ],
+        "tone": [
+          "formal but natural",
+          "clear and user-controlled"
+        ],
+        "structure": [
+          "context",
+          "task",
+          "structured answer",
+          "next step"
+        ],
+        "styleRules": [
+          "make selected habits visible",
+          "keep each section concise",
+          "avoid dense paragraphs"
+        ],
+        "constraints": [
+          "do not save automatically without user confirmation",
+          "show how user control affects the output"
+        ],
+        "examples": [
+          "11111"
+        ],
+        "tags": [
+          "task",
+          "outline",
+          "habit"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T07:15:45.503Z"
+    },
+    {
+      "id": "session_c7042461-236c-44ec-a6b9-543c77516fcf",
+      "userTask": "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "selectedCards": [
+        {
+          "cardId": "formal-chinese-email",
+          "mode": "all",
+          "selectedFields": []
+        }
+      ],
+      "generatedContext": "User-selected AI work habits:\n[Skill Card: Formal Chinese Email]\nApply mode: all\nScenarios: email, teacher message, work request, 中文邮件\nTone: polite; concise; respectful\nStructure: greeting -> purpose -> key points -> request -> closing\nStyle rules: state the request early; avoid over-explaining; keep the closing warm but brief\nConstraints: do not sound pushy; do not add private personal details\nExamples: email to an instructor; formal request for feedback\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "modelProvider": "mock",
+      "modelName": "mock-fallback",
+      "output": "[Fallback content] This response was generated locally because the real LLM provider was unavailable or not configured.\n\n1. Title: AI Skill Passport\n2. Background: Users repeat collaboration preferences across AI tasks.\n3. Problem: Habits stay hidden inside old prompts and are hard to reuse.\n4. Concept: Skill Cards turn reusable habits into editable, selectable objects.\n5. Flow: Create cards, receive recommendations, select full or partial use, preview context, generate with the model.\n6. HCI Value: User control, transparency, privacy, and transferable routines.\n7. Sharing: Snapshot links allow preview, import, and fork without exposing the original private card.\n8. Summary: The demo proves that visible habits can shape model output while keeping users in control.\n\nOriginal task: User-selected AI work habits:\n[Skill Card: Formal Chinese Email]\nApply mode: all\nScenarios: email, teacher message, work request, 中文邮件\nTone: polite; concise; respectful\nStructure: greeting -> purpose -> key points -> request -> closing\nStyle rules: state the request early; avoid over-explaining; keep the closing warm but brief\nConstraints: do not sound pushy; do not add private personal details\nExamples: email to an instructor; formal request for feedback\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "status": "completed",
+      "usedFallback": true,
+      "suggestedCard": {
+        "name": "HCI Project Demo Outline",
+        "description": "Reusable habit distilled from this task and selected cards: Formal Chinese Email.",
+        "scenarios": [
+          "HCI project presentation",
+          "course demo",
+          "PPT outline"
+        ],
+        "tone": [
+          "formal but natural",
+          "clear and user-controlled"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "HCI value",
+          "sharing and import",
+          "summary"
+        ],
+        "styleRules": [
+          "make selected habits visible",
+          "keep each section concise",
+          "avoid dense paragraphs"
+        ],
+        "constraints": [
+          "do not save automatically without user confirmation",
+          "show how user control affects the output"
+        ],
+        "examples": [
+          "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。"
+        ],
+        "tags": [
+          "hci",
+          "ppt",
+          "demo",
+          "outline"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T07:15:29.899Z"
+    },
+    {
+      "id": "session_5dd9aa67-d2ae-4cf6-bf36-b9c757b8c4aa",
+      "userTask": "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "selectedCards": [
+        {
+          "cardId": "classroom-presentation",
+          "mode": "all",
+          "selectedFields": []
+        },
+        {
+          "cardId": "minimal-visual-style",
+          "mode": "all",
+          "selectedFields": []
+        },
+        {
+          "cardId": "defense-presentation",
+          "mode": "all",
+          "selectedFields": []
+        }
+      ],
+      "generatedContext": "User-selected AI work habits:\n[Skill Card: Classroom Presentation]\nApply mode: all\nScenarios: PPT, course presentation, HCI report, 课堂汇报, 项目展示\nTone: formal but not stiff; 自然、清晰、有课堂感\nStructure: background -> problem -> concept -> interaction flow -> value -> summary\nStyle rules: one key idea per slide; visible hierarchy; avoid long paragraphs; use process and card-based explanations\nConstraints: avoid empty slogans; make every slide understandable to a course audience\nExamples: 8-slide HCI project outline; problem-solution-value presentation flow\n\n[Skill Card: Minimal Visual Style]\nApply mode: all\nScenarios: slides, dashboard, poster, visual design, 极简视觉\nTone: clean; direct; quiet confidence\nStructure: one idea per section -> clear scan path -> summary after details\nStyle rules: restrained colors; clear spacing; no dense decoration; use hierarchy before ornament\nConstraints: avoid excessive decorative language; keep each visual recommendation inspectable\nExamples: minimal slide style guide; card-based dashboard layout\n\n[Skill Card: Defense Presentation]\nApply mode: all\nScenarios: thesis defense, research presentation, project defense, 答辩\nTone: confident; evidence-led; calm under questioning\nStructure: research question -> method -> result -> contribution -> limitation\nStyle rules: emphasize problem-solution logic; show evidence before claims; use diagrams for method and results\nConstraints: do not overclaim; make limitations explicit\nExamples: defense script outline; research contribution summary\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "modelProvider": "mock",
+      "modelName": "mock-fallback",
+      "output": "[Fallback content] This response was generated locally because the real LLM provider was unavailable or not configured.\n\n1. Title: AI Skill Passport\n2. Background: Users repeat collaboration preferences across AI tasks.\n3. Problem: Habits stay hidden inside old prompts and are hard to reuse.\n4. Concept: Skill Cards turn reusable habits into editable, selectable objects.\n5. Flow: Create cards, receive recommendations, select full or partial use, preview context, generate with the model.\n6. HCI Value: User control, transparency, privacy, and transferable routines.\n7. Sharing: Snapshot links allow preview, import, and fork without exposing the original private card.\n8. Summary: The demo proves that visible habits can shape model output while keeping users in control.\n\nOriginal task: User-selected AI work habits:\n[Skill Card: Classroom Presentation]\nApply mode: all\nScenarios: PPT, course presentation, HCI report, 课堂汇报, 项目展示\nTone: formal but not stiff; 自然、清晰、有课堂感\nStructure: background -> problem -> concept -> interaction flow -> value -> summary\nStyle rules: one key idea per slide; visible hierarchy; avoid long paragraphs; use process and card-based explanations\nConstraints: avoid empty slogans; make every slide understandable to a course audience\nExamples: 8-slide HCI project outline; problem-solution-value presentation flow\n\n[Skill Card: Minimal Visual Style]\nApply mode: all\nScenarios: slides, dashboard, poster, visual design, 极简视觉\nTone: clean; direct; quiet confidence\nStructure: one idea per section -> clear scan path -> summary after details\nStyle rules: restrained colors; clear spacing; no dense decoration; use hierarchy before ornament\nConstraints: avoid excessive decorative language; keep each visual recommendation inspectable\nExamples: minimal slide style guide; card-based dashboard layout\n\n[Skill Card: Defense Presentation]\nApply mode: all\nScenarios: thesis defense, research presentation, project defense, 答辩\nTone: confident; evidence-led; calm under questioning\nStructure: research question -> method -> result -> contribution -> limitation\nStyle rules: emphasize problem-solution logic; show evidence before claims; use diagrams for method and results\nConstraints: do not overclaim; make limitations explicit\nExamples: defense script outline; research contribution summary\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "status": "completed",
+      "usedFallback": true,
+      "suggestedCard": {
+        "name": "HCI Project Demo Outline",
+        "description": "Reusable habit distilled from this task and selected cards: Classroom Presentation, Minimal Visual Style, Defense Presentation.",
+        "scenarios": [
+          "HCI project presentation",
+          "course demo",
+          "PPT outline"
+        ],
+        "tone": [
+          "formal but natural",
+          "clear and user-controlled"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "HCI value",
+          "sharing and import",
+          "summary"
+        ],
+        "styleRules": [
+          "make selected habits visible",
+          "keep each section concise",
+          "avoid dense paragraphs"
+        ],
+        "constraints": [
+          "do not save automatically without user confirmation",
+          "show how user control affects the output"
+        ],
+        "examples": [
+          "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。"
+        ],
+        "tags": [
+          "hci",
+          "ppt",
+          "demo",
+          "outline"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T07:14:50.808Z"
+    },
+    {
+      "id": "session_30bde942-6aee-43c7-a202-7a066d10136b",
+      "userTask": "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "selectedCards": [],
+      "generatedContext": "User-selected AI work habits:\nNo Skill Cards were applied.\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "modelProvider": "mock",
+      "modelName": "mock-fallback",
+      "output": "[Fallback content] This response was generated locally because the real LLM provider was unavailable or not configured.\n\n1. Title: AI Skill Passport\n2. Background: Users repeat collaboration preferences across AI tasks.\n3. Problem: Habits stay hidden inside old prompts and are hard to reuse.\n4. Concept: Skill Cards turn reusable habits into editable, selectable objects.\n5. Flow: Create cards, receive recommendations, select full or partial use, preview context, generate with the model.\n6. HCI Value: User control, transparency, privacy, and transferable routines.\n7. Sharing: Snapshot links allow preview, import, and fork without exposing the original private card.\n8. Summary: The demo proves that visible habits can shape model output while keeping users in control.\n\nOriginal task: User-selected AI work habits:\nNo Skill Cards were applied.\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "status": "completed",
+      "usedFallback": true,
+      "suggestedCard": {
+        "name": "HCI Project Demo Outline",
+        "description": "Reusable habit distilled from the completed task.",
+        "scenarios": [
+          "HCI project presentation",
+          "course demo",
+          "PPT outline"
+        ],
+        "tone": [
+          "formal but natural",
+          "clear and user-controlled"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "HCI value",
+          "sharing and import",
+          "summary"
+        ],
+        "styleRules": [
+          "make selected habits visible",
+          "keep each section concise",
+          "avoid dense paragraphs"
+        ],
+        "constraints": [
+          "do not save automatically without user confirmation",
+          "show how user control affects the output"
+        ],
+        "examples": [
+          "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。"
+        ],
+        "tags": [
+          "hci",
+          "ppt",
+          "demo",
+          "outline"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T07:14:00.782Z"
+    },
+    {
+      "id": "session_f47a31b7-3cc7-46b0-8a92-047824bd7b6f",
+      "userTask": "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "selectedCards": [],
+      "generatedContext": "User-selected AI work habits:\nNo Skill Cards were applied.\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "modelProvider": "mock",
+      "modelName": "mock-fallback",
+      "output": "[Fallback content] This response was generated locally because the real LLM provider was unavailable or not configured.\n\n1. Title: AI Skill Passport\n2. Background: Users repeat collaboration preferences across AI tasks.\n3. Problem: Habits stay hidden inside old prompts and are hard to reuse.\n4. Concept: Skill Cards turn reusable habits into editable, selectable objects.\n5. Flow: Create cards, receive recommendations, select full or partial use, preview context, generate with the model.\n6. HCI Value: User control, transparency, privacy, and transferable routines.\n7. Sharing: Snapshot links allow preview, import, and fork without exposing the original private card.\n8. Summary: The demo proves that visible habits can shape model output while keeping users in control.\n\nOriginal task: User-selected AI work habits:\nNo Skill Cards were applied.\n\nControl rules:\n- The current task overrides long-term habits when they conflict.\n- Partial mode includes only the fields listed in the selection.\n- Temporary mode applies only to this generation and does not save a new habit automatically.\n- A suggested habit requires explicit user confirmation before it is saved.\n\nCurrent user task:\n帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。",
+      "status": "completed",
+      "usedFallback": true,
+      "suggestedCard": {
+        "name": "HCI Project Demo Outline",
+        "description": "Reusable habit distilled from the completed task.",
+        "scenarios": [
+          "HCI project presentation",
+          "course demo",
+          "PPT outline"
+        ],
+        "tone": [
+          "formal but natural",
+          "clear and user-controlled"
+        ],
+        "structure": [
+          "background",
+          "problem",
+          "concept",
+          "interaction flow",
+          "HCI value",
+          "sharing and import",
+          "summary"
+        ],
+        "styleRules": [
+          "make selected habits visible",
+          "keep each section concise",
+          "avoid dense paragraphs"
+        ],
+        "constraints": [
+          "do not save automatically without user confirmation",
+          "show how user control affects the output"
+        ],
+        "examples": [
+          "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。"
+        ],
+        "tags": [
+          "hci",
+          "ppt",
+          "demo",
+          "outline"
+        ],
+        "privacy": "private"
+      },
+      "createdAt": "2026-06-13T07:13:57.355Z"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "event_176718cd-94fc-4f42-afca-4934bc222078",
+      "type": "suggested",
+      "title": "建议新技能卡片",
+      "detail": "可复用任务提纲",
+      "createdAt": "2026-06-13T08:47:51.067Z",
+      "taskSessionId": "session_c1954d78-890c-4844-8042-e63183a38c21"
+    },
+    {
+      "id": "event_aaa75ba2-703f-43df-82eb-9aadb5c99d04",
+      "type": "used",
+      "title": "使用技能卡片",
+      "detail": "中文邮件助手",
+      "createdAt": "2026-06-13T08:47:51.067Z",
+      "cardId": "formal-chinese-email",
+      "taskSessionId": "session_c1954d78-890c-4844-8042-e63183a38c21"
+    },
+    {
+      "id": "event_a5eb08b2-346d-41dc-87d5-bc938e7bdaef",
+      "type": "suggested",
+      "title": "Suggested new Skill Card",
+      "detail": "Reusable Task Outline",
+      "createdAt": "2026-06-13T07:24:19.145Z",
+      "taskSessionId": "session_c0e668e7-cf87-4974-ab0c-568654a8c9f7"
+    },
+    {
+      "id": "event_6da6f95f-59aa-4193-ad7d-ff35657a3ef3",
+      "type": "used",
+      "title": "Used Skill Card",
+      "detail": "Defense Presentation",
+      "createdAt": "2026-06-13T07:24:19.145Z",
+      "cardId": "defense-presentation",
+      "taskSessionId": "session_c0e668e7-cf87-4974-ab0c-568654a8c9f7"
+    },
+    {
+      "id": "event_fd5269b8-2089-422f-a8d5-cf336d1abc5c",
+      "type": "suggested",
+      "title": "Suggested new Skill Card",
+      "detail": "HCI Project Demo Outline",
+      "createdAt": "2026-06-13T07:20:49.415Z",
+      "taskSessionId": "session_940fbf48-8b6b-4f1f-a03c-2cbd968e4c79"
+    },
+    {
+      "id": "event_eeb81054-a4d4-4e33-89e4-e28324d09d15",
+      "type": "used",
+      "title": "Used Skill Card",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:20:49.415Z",
+      "cardId": "classroom-presentation",
+      "taskSessionId": "session_940fbf48-8b6b-4f1f-a03c-2cbd968e4c79"
+    },
+    {
+      "id": "event_e600d684-e5b7-4046-9021-04649c7ea453",
+      "type": "suggested",
+      "title": "Suggested new Skill Card",
+      "detail": "Reusable Task Outline",
+      "createdAt": "2026-06-13T07:15:45.503Z",
+      "taskSessionId": "session_8bcd3a39-3e28-4a27-9674-385ab05b6c33"
+    },
+    {
+      "id": "event_7c26e39f-7866-498d-b6dc-f362915dd563",
+      "type": "used",
+      "title": "Used Skill Card",
+      "detail": "Formal Chinese Email",
+      "createdAt": "2026-06-13T07:15:45.503Z",
+      "cardId": "formal-chinese-email",
+      "taskSessionId": "session_8bcd3a39-3e28-4a27-9674-385ab05b6c33"
+    },
+    {
+      "id": "event_2d676799-0bac-43d2-aac5-15ac0ca7a2e0",
+      "type": "suggested",
+      "title": "Suggested new Skill Card",
+      "detail": "HCI Project Demo Outline",
+      "createdAt": "2026-06-13T07:15:29.899Z",
+      "taskSessionId": "session_c7042461-236c-44ec-a6b9-543c77516fcf"
+    },
+    {
+      "id": "event_092c950c-2afe-42db-b3ca-027a75507d2c",
+      "type": "used",
+      "title": "Used Skill Card",
+      "detail": "Formal Chinese Email",
+      "createdAt": "2026-06-13T07:15:29.899Z",
+      "cardId": "formal-chinese-email",
+      "taskSessionId": "session_c7042461-236c-44ec-a6b9-543c77516fcf"
+    },
+    {
+      "id": "event_9ba787e6-8ca8-4314-8d85-6cbbabcf4f80",
+      "type": "created",
+      "title": "Created Skill Card",
+      "detail": "HCI Project Demo Outline",
+      "createdAt": "2026-06-13T07:15:06.959Z",
+      "cardId": "card_551fd340-8a4e-4d1f-9a54-a0d250ad175e"
+    },
+    {
+      "id": "event_521ec28a-283c-46f3-b542-239e59c6046c",
+      "type": "suggested",
+      "title": "Suggested new Skill Card",
+      "detail": "HCI Project Demo Outline",
+      "createdAt": "2026-06-13T07:14:50.808Z",
+      "taskSessionId": "session_5dd9aa67-d2ae-4cf6-bf36-b9c757b8c4aa"
+    },
+    {
+      "id": "event_5ccf8455-2f13-408d-8d89-0c3731f1b8bc",
+      "type": "used",
+      "title": "Used Skill Card",
+      "detail": "Defense Presentation",
+      "createdAt": "2026-06-13T07:14:50.808Z",
+      "cardId": "defense-presentation",
+      "taskSessionId": "session_5dd9aa67-d2ae-4cf6-bf36-b9c757b8c4aa"
+    },
+    {
+      "id": "event_498d7136-e062-4068-b1f6-93f91523625e",
+      "type": "used",
+      "title": "Used Skill Card",
+      "detail": "Minimal Visual Style",
+      "createdAt": "2026-06-13T07:14:50.808Z",
+      "cardId": "minimal-visual-style",
+      "taskSessionId": "session_5dd9aa67-d2ae-4cf6-bf36-b9c757b8c4aa"
+    },
+    {
+      "id": "event_05631367-b2d0-4de7-9b4c-22ad4b5b28fc",
+      "type": "used",
+      "title": "Used Skill Card",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:14:50.808Z",
+      "cardId": "classroom-presentation",
+      "taskSessionId": "session_5dd9aa67-d2ae-4cf6-bf36-b9c757b8c4aa"
+    },
+    {
+      "id": "event_63cd3dee-6637-4e6f-aac5-c52407aa57f9",
+      "type": "suggested",
+      "title": "Suggested new Skill Card",
+      "detail": "HCI Project Demo Outline",
+      "createdAt": "2026-06-13T07:14:00.782Z",
+      "taskSessionId": "session_30bde942-6aee-43c7-a202-7a066d10136b"
+    },
+    {
+      "id": "event_a6f51957-6c7d-4d05-9a1b-79301a6698d6",
+      "type": "suggested",
+      "title": "Suggested new Skill Card",
+      "detail": "HCI Project Demo Outline",
+      "createdAt": "2026-06-13T07:13:57.355Z",
+      "taskSessionId": "session_f47a31b7-3cc7-46b0-8a92-047824bd7b6f"
+    },
+    {
+      "id": "event_466ae191-ad6d-4c73-9f91-f2009610322d",
+      "type": "updated",
+      "title": "Updated Skill Card",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:13:34.071Z",
+      "cardId": "classroom-presentation"
+    },
+    {
+      "id": "event_24b4cd25-fda7-4180-a5dd-31bc2fddb7bc",
+      "type": "updated",
+      "title": "Updated Skill Card",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:13:33.892Z",
+      "cardId": "classroom-presentation"
+    },
+    {
+      "id": "event_7a1d33fd-cc55-4818-9745-8d8684232a0e",
+      "type": "updated",
+      "title": "Updated Skill Card",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:13:33.379Z",
+      "cardId": "classroom-presentation"
+    },
+    {
+      "id": "event_0bce2ff3-223d-4d31-bd92-8f1234ba3764",
+      "type": "shared",
+      "title": "Created share link",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:13:33.050Z",
+      "cardId": "classroom-presentation"
+    },
+    {
+      "id": "event_c6111254-e632-4682-90dc-d73a4b7085b6",
+      "type": "shared",
+      "title": "Created share link",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:13:32.893Z",
+      "cardId": "classroom-presentation"
+    },
+    {
+      "id": "event_bac06a3a-a84f-4629-ad0d-fdfcc35df5cc",
+      "type": "shared",
+      "title": "Created share link",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:13:32.543Z",
+      "cardId": "classroom-presentation"
+    },
+    {
+      "id": "event_764bd069-5557-4308-8352-371853fde85b",
+      "type": "shared",
+      "title": "Created share link",
+      "detail": "Classroom Presentation",
+      "createdAt": "2026-06-13T07:13:31.255Z",
+      "cardId": "classroom-presentation"
+    }
+  ]
 }

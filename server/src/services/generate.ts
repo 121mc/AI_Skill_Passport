@@ -19,10 +19,11 @@ export type GenerateDeps = {
 };
 
 const systemMessage = [
-  "You are the task assistant inside the AI Skill Passport demo.",
-  "Your goal is not only to answer the user. You must visibly apply the Skill Cards selected by the user.",
-  "If a long-term habit conflicts with the current task, the current task wins.",
-  "The output should reflect the selected tone, structure, style rules, and constraints."
+  "你是 AI 技能护照演示中的任务助手。",
+  "你的目标不只是回答用户，还要显性应用用户选择的技能卡片。",
+  "如果长期习惯与当前任务冲突，以当前任务为准。",
+  "输出应体现已选择的语气、结构、风格规则和约束。",
+  "当前 AI 接入只支持文本输出；不要声称已经生成图片、PPT 文件、附件或其他非文本产物。"
 ].join("\n");
 
 export async function generateTaskResponse(input: GenerateInput, deps: GenerateDeps): Promise<GenerateResponse> {
@@ -93,12 +94,12 @@ export async function generateTaskResponse(input: GenerateInput, deps: GenerateD
           card.usageCount += 1;
           card.lastUsedAt = session.createdAt;
           card.updatedAt = session.createdAt;
-          writeDb.timeline.unshift(event("used", "Used Skill Card", card.name, { cardId: card.id, taskSessionId: sessionId }));
+          writeDb.timeline.unshift(event("used", "使用技能卡片", card.name, { cardId: card.id, taskSessionId: sessionId }));
         }
       }
     }
 
-    writeDb.timeline.unshift(event("suggested", "Suggested new Skill Card", suggestedCard.name, { taskSessionId: sessionId }));
+    writeDb.timeline.unshift(event("suggested", "建议新技能卡片", suggestedCard.name, { taskSessionId: sessionId }));
   });
 
   return {

@@ -26,10 +26,11 @@ export function SkillCardTile({
       <div>
         <h2>{card.name}</h2>
         <p>{card.description}</p>
+        {card.presetPrompt ? <p className="prompt-preview">{card.presetPrompt}</p> : null}
       </div>
 
       {card.tags.length > 0 ? (
-        <div className="tag-row" aria-label="Card tags">
+        <div className="tag-row" aria-label="卡片标签">
           {card.tags.slice(0, 5).map((tag) => (
             <span className="tag" key={tag}>
               {tag}
@@ -43,15 +44,15 @@ export function SkillCardTile({
       <div className="button-row">
         <button className="button primary" type="button" onClick={() => navigate(`/task?card=${encodeURIComponent(card.id)}`)}>
           <Play size={16} aria-hidden="true" />
-          Use
+          使用
         </button>
         <Link className="button" to={`/cards/${card.id}`}>
           <Edit3 size={16} aria-hidden="true" />
-          Edit
+          编辑
         </Link>
         <button className="button subtle" type="button" onClick={() => onShare?.(card.id)} disabled={isSharing}>
           <Share2 size={16} aria-hidden="true" />
-          {isSharing ? "Sharing" : "Share"}
+          {isSharing ? "分享中" : "分享"}
         </button>
       </div>
     </article>

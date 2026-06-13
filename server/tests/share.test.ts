@@ -29,7 +29,7 @@ describe("share service", () => {
       if (!card) {
         throw new Error("Seed card not found: classroom-presentation");
       }
-      card.name = "Mutated Classroom Presentation";
+      card.name = "被修改的课堂展示助手";
       card.description = "This edit should not change the share snapshot.";
       card.updatedAt = new Date().toISOString();
     });
@@ -37,8 +37,9 @@ describe("share service", () => {
 
     expect(share.url).toBe("http://localhost:5173/share/" + share.shareId);
     expect(preview?.snapshot.id).toBe("classroom-presentation");
-    expect(preview?.snapshot.name).toBe("Classroom Presentation");
-    expect(preview?.snapshot.description).toBe("Builds clear HCI or course presentation outlines with a formal but natural classroom tone.");
+    expect(preview?.snapshot.name).toBe("课堂展示助手");
+    expect(preview?.snapshot.description).toBe("用于 HCI 或课程汇报，生成清晰、自然、有课堂感的文本型展示大纲。");
+    expect(preview?.snapshot.presetPrompt).toContain("只输出文本");
   });
 
   it("imports a shared card as a local user-owned copy", async () => {
@@ -54,7 +55,7 @@ describe("share service", () => {
 
     expect(imported.id).toMatch(/^imported_/);
     expect(imported.id).not.toBe("minimal-visual-style");
-    expect(imported.name).toBe("Minimal Visual Style");
+    expect(imported.name).toBe("开放设计文本助手");
     expect(db.shares[0].importCount).toBe(1);
     expect(db.timeline[0].type).toBe("imported");
   });

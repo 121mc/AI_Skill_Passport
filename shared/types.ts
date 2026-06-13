@@ -6,6 +6,7 @@ export type SkillCard = {
   id: string;
   name: string;
   description: string;
+  presetPrompt?: string;
   scenarios: string[];
   tone: string[];
   structure: string[];
@@ -56,6 +57,7 @@ export type TaskSession = {
 export type SuggestedCard = {
   name: string;
   description: string;
+  presetPrompt?: string;
   scenarios: string[];
   tone: string[];
   structure: string[];

@@ -27,7 +27,7 @@ export function Settings() {
       setHealth(nextHealth);
     } catch (loadError) {
       if (requestIdRef.current === requestId) {
-        setError(errorMessage(loadError, "Unable to load API health."));
+        setError(errorMessage(loadError, "无法加载 API 状态。"));
       }
     } finally {
       if (requestIdRef.current === requestId) {
@@ -48,16 +48,16 @@ export function Settings() {
     <div className="stack">
       <section className="page-title">
         <div>
-          <h1>Settings</h1>
-          <p>Model provider status and local demo configuration.</p>
+          <h1>设置</h1>
+          <p>查看模型服务状态和本地演示配置。</p>
         </div>
         <button className="button subtle" type="button" onClick={() => void loadHealth()}>
           <RefreshCw size={16} aria-hidden="true" />
-          {isLoading ? "Refreshing" : "Refresh"}
+          {isLoading ? "刷新中" : "刷新"}
         </button>
       </section>
 
-      {isLoading && !health ? <div className="panel">Loading API health...</div> : null}
+      {isLoading && !health ? <div className="panel">正在加载 API 状态...</div> : null}
 
       {error ? (
         <div className="panel" role="alert">
@@ -68,13 +68,13 @@ export function Settings() {
       {health ? (
         <section className="panel stack">
           <div className="button-row">
-            <span className={`badge ${health.ok ? "public" : "private"}`}>API {health.ok ? "online" : "offline"}</span>
+            <span className={`badge ${health.ok ? "public" : "private"}`}>API {health.ok ? "在线" : "离线"}</span>
             <span className="badge">{health.provider}</span>
             <span className={`badge ${health.modelConfigured ? "public" : "team"}`}>
-              Model {health.modelConfigured ? "configured" : "missing"}
+              模型{health.modelConfigured ? "已配置" : "缺失"}
             </span>
             <span className={`badge ${health.fallbackEnabled ? "link" : "private"}`}>
-              Fallback {health.fallbackEnabled ? "enabled" : "disabled"}
+              降级输出{health.fallbackEnabled ? "已启用" : "已关闭"}
             </span>
           </div>
 
@@ -82,15 +82,15 @@ export function Settings() {
             <article className="card stack">
               <Server size={18} aria-hidden="true" />
               <div>
-                <h2>API status</h2>
-                <p>{health.ok ? "Server API is reachable." : "Server API reported an offline status."}</p>
+                <h2>API 状态</h2>
+                <p>{health.ok ? "服务端 API 可访问。" : "服务端 API 当前离线。"}</p>
               </div>
             </article>
             <article className="card stack">
               <ShieldCheck size={18} aria-hidden="true" />
               <div>
-                <h2>Secrets</h2>
-                <p>Browser never receives LLM_API_KEY. API keys stay backend-only.</p>
+                <h2>密钥</h2>
+                <p>浏览器不会收到 LLM_API_KEY，API 密钥只保存在后端。</p>
               </div>
             </article>
           </div>

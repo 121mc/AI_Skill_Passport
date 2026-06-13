@@ -39,7 +39,7 @@ export function Dashboard() {
         }
       } catch (loadError) {
         if (isMounted) {
-          setError(loadError instanceof Error ? loadError.message : "Unable to load cards.");
+          setError(loadError instanceof Error ? loadError.message : "无法加载卡片。");
         }
       } finally {
         if (isMounted) {
@@ -75,7 +75,7 @@ export function Dashboard() {
 
       setShareState({
         cardId,
-        error: shareError instanceof Error ? shareError.message : "Unable to create share link.",
+        error: shareError instanceof Error ? shareError.message : "无法创建分享链接。",
         requestId,
         status: "error"
       });
@@ -86,24 +86,24 @@ export function Dashboard() {
     <div className="stack">
       <section className="page-title">
         <div>
-          <h1>Skill Card Library</h1>
-          <p>Reusable AI work habits owned by the user.</p>
+          <h1>技能卡片库</h1>
+          <p>管理可复用的 AI 协作习惯，选择后只生成文本结果。</p>
         </div>
       </section>
 
-      {isLoading ? <div className="panel">Loading cards...</div> : null}
+      {isLoading ? <div className="panel">正在加载卡片...</div> : null}
 
       {!isLoading && error ? <div className="panel">{error}</div> : null}
 
       {shareState.status === "success" && shareState.url ? (
         <div className="panel stack">
-          <strong>Share link ready</strong>
+          <strong>分享链接已生成</strong>
           <a href={shareState.url}>{shareState.url}</a>
         </div>
       ) : null}
 
       {!isLoading && !error && cards.length > 0 ? (
-        <section className="grid" aria-label="Skill cards">
+        <section className="grid" aria-label="技能卡片">
           {cards.map((card) => (
             <SkillCardTile
               card={card}
@@ -117,7 +117,7 @@ export function Dashboard() {
       ) : null}
 
       {!isLoading && !error && cards.length === 0 ? (
-        <div className="panel">No skill cards yet.</div>
+        <div className="panel">还没有技能卡片。</div>
       ) : null}
     </div>
   );

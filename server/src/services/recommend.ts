@@ -1,11 +1,19 @@
 import type { Recommendation, SkillCard } from "../../../shared/types.js";
 
 const keywordMap: Record<string, string[]> = {
-  ppt: ["ppt", "slides", "slide", "presentation", "展示", "汇报", "大纲", "演示"],
+  ppt: ["ppt", "slides", "slide", "presentation", "展示", "汇报", "大纲", "演示", "幻灯片"],
   hci: ["hci", "human-computer", "人机交互", "课程", "项目"],
-  writing: ["email", "邮件", "写作", "message"],
+  writing: ["email", "邮件", "写作", "message", "文本"],
   defense: ["defense", "答辩", "论文", "研究"],
-  visual: ["visual", "style", "设计", "视觉", "极简", "版式"]
+  visual: ["visual", "style", "设计", "视觉", "极简", "版式", "open design", "开放设计"]
+};
+
+const bucketLabels: Record<string, string> = {
+  ppt: "PPT",
+  hci: "HCI",
+  writing: "写作",
+  defense: "答辩",
+  visual: "视觉设计"
 };
 
 export function recommendCards(task: string, cards: SkillCard[]): Recommendation[] {
@@ -22,7 +30,7 @@ export function recommendCards(task: string, cards: SkillCard[]): Recommendation
         if (normalizedTask.includes(tag.toLowerCase())) {
           hasSemanticMatch = true;
           score += 12;
-          reasons.push(`Matched tag "${tag}"`);
+          reasons.push(`匹配标签「${tag}」`);
         }
       }
 
@@ -35,14 +43,23 @@ export function recommendCards(task: string, cards: SkillCard[]): Recommendation
         if (supportTerms.length > 0) {
           hasSemanticMatch = true;
           score += taskMatches.length * 8;
-          reasons.push(`Task matched ${formatBucketLabel(bucket)} terms; card supports ${supportTerms.join("/")}`);
+          reasons.push(`任务包含 ${formatBucketLabel(bucket)} 相关词；卡片支持 ${supportTerms.join("/")}`);
         }
       }
 
       if (normalizedTask.includes("hci") && card.tags.includes("hci")) {
         hasSemanticMatch = true;
         score += 18;
-        reasons.push("HCI task fit");
+        reasons.push("HCI 任务匹配");
+      }
+
+      if (
+        (normalizedTask.includes("ppt") || normalizedTask.includes("展示") || normalizedTask.includes("大纲")) &&
+        (card.tags.includes("visual") || card.tags.includes("design") || card.tags.includes("开放设计"))
+      ) {
+        hasSemanticMatch = true;
+        score += 14;
+        reasons.push("视觉表达匹配");
       }
 
       if (
@@ -51,12 +68,12 @@ export function recommendCards(task: string, cards: SkillCard[]): Recommendation
       ) {
         hasSemanticMatch = true;
         score += 10;
-        reasons.push("Presentation scenario fit");
+        reasons.push("展示场景匹配");
       }
 
       if (hasSemanticMatch && normalizedTask.includes("ppt")) {
         score += Math.round(card.compatibility.ppt / 10);
-        reasons.push(`PPT compatibility ${card.compatibility.ppt}`);
+        reasons.push(`PPT 适配度 ${card.compatibility.ppt}`);
       }
 
       return { card, score, reasons, hasSemanticMatch };
@@ -75,6 +92,7 @@ function searchableCardText(card: SkillCard): string {
   return [
     card.name,
     card.description,
+    card.presetPrompt ?? "",
     card.scenarios.join(" "),
     card.tone.join(" "),
     card.structure.join(" "),
@@ -95,8 +113,5 @@ function cardSupportTerms(bucket: string, words: string[], cardText: string): st
 }
 
 function formatBucketLabel(bucket: string): string {
-  if (bucket === "ppt" || bucket === "hci") {
-    return bucket.toUpperCase();
-  }
-  return bucket;
+  return bucketLabels[bucket] ?? bucket;
 }

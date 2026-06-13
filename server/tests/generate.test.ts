@@ -67,9 +67,10 @@ describe("generateTaskResponse", () => {
     );
 
     expect(adapter.generate).toHaveBeenCalledTimes(1);
-    expect(vi.mocked(adapter.generate).mock.calls[0][0].messages[1].content).toContain("Classroom Presentation");
+    expect(vi.mocked(adapter.generate).mock.calls[0][0].messages[1].content).toContain("课堂展示助手");
     expect(result.usedFallback).toBe(false);
-    expect(result.suggestedCard.name).toBe("HCI Project Demo Outline");
+    expect(result.suggestedCard.name).toBe("HCI 项目展示大纲");
+    expect(result.suggestedCard.presetPrompt).toContain("只输出文本");
   });
 
   it("returns clearly marked fallback only when fallback is enabled", async () => {
@@ -93,7 +94,7 @@ describe("generateTaskResponse", () => {
     );
 
     expect(result.usedFallback).toBe(true);
-    expect(result.output).toContain("[Fallback content]");
+    expect(result.output).toContain("[本地降级内容]");
   });
 
   it("rejects adapter failures without fallback and does not persist a session", async () => {
@@ -143,7 +144,7 @@ describe("generateTaskResponse", () => {
 
     expect(adapter.generate).not.toHaveBeenCalled();
     expect(result.usedFallback).toBe(true);
-    expect(result.output).toContain("[Fallback content]");
+    expect(result.output).toContain("[本地降级内容]");
   });
 
   it("increments usage for non-temporary selected cards only", async () => {
@@ -182,8 +183,8 @@ describe("generateTaskResponse", () => {
     expect(usedEvents).toHaveLength(1);
     expect(usedEvents[0]).toMatchObject({
       cardId: "classroom-presentation",
-      detail: "Classroom Presentation",
-      title: "Used Skill Card"
+      detail: "课堂展示助手",
+      title: "使用技能卡片"
     });
   });
 

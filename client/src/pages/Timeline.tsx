@@ -17,8 +17,17 @@ function errorMessage(error: unknown, fallback: string) {
 }
 
 function formatDate(value: string) {
-  return new Date(value).toLocaleString();
+  return new Date(value).toLocaleString("zh-CN");
 }
+
+const eventTypeLabels: Record<MemoryEvent["type"], string> = {
+  created: "创建",
+  imported: "导入",
+  shared: "分享",
+  suggested: "建议",
+  updated: "更新",
+  used: "使用"
+};
 
 export function Timeline() {
   const requestIdRef = useRef(0);
@@ -43,7 +52,7 @@ export function Timeline() {
         setEvents(nextEvents);
       } catch (loadError) {
         if (requestIdRef.current === requestId) {
-          setError(errorMessage(loadError, "Unable to load memory timeline."));
+          setError(errorMessage(loadError, "无法加载记忆时间线。"));
         }
       } finally {
         if (requestIdRef.current === requestId) {
@@ -63,12 +72,12 @@ export function Timeline() {
     <div className="stack">
       <section className="page-title">
         <div>
-          <h1>Memory Timeline</h1>
-          <p>Habit usage, sharing, importing, and suggestions.</p>
+          <h1>记忆时间线</h1>
+          <p>查看习惯使用、分享、导入和建议记录。</p>
         </div>
       </section>
 
-      {isLoading ? <div className="panel">Loading memory timeline...</div> : null}
+      {isLoading ? <div className="panel">正在加载记忆时间线...</div> : null}
 
       {!isLoading && error ? (
         <div className="panel" role="alert">
@@ -76,10 +85,10 @@ export function Timeline() {
         </div>
       ) : null}
 
-      {!isLoading && !error && events.length === 0 ? <div className="panel">No memory events yet.</div> : null}
+      {!isLoading && !error && events.length === 0 ? <div className="panel">还没有记忆事件。</div> : null}
 
       {!isLoading && !error && events.length > 0 ? (
-        <section className="stack" aria-label="Memory events">
+        <section className="stack" aria-label="记忆事件">
           {events.map((event) => {
             const Icon = eventIcons[event.type];
 
@@ -88,7 +97,7 @@ export function Timeline() {
                 <div className="button-row">
                   <span className="badge">
                     <Icon size={14} aria-hidden="true" />
-                    {event.type}
+                    {eventTypeLabels[event.type]}
                   </span>
                   <span className="tag">{formatDate(event.createdAt)}</span>
                 </div>

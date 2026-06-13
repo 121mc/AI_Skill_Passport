@@ -27,10 +27,22 @@ describe("buildContextPreview", () => {
     ]);
 
     expect(result.appliedCards[0].fields).toEqual(["tone", "structure", "styleRules", "constraints", "examples"]);
-    expect(result.context).toContain("[Skill Card: Classroom Presentation]");
-    expect(result.context).toContain("Tone: formal but natural");
-    expect(result.context).toContain("Structure: background -> problem -> solution");
-    expect(result.context).toContain("Constraints: avoid slogans");
+    expect(result.context).toContain("[技能卡片: Classroom Presentation]");
+    expect(result.context).toContain("语气: formal but natural");
+    expect(result.context).toContain("结构: background -> problem -> solution");
+    expect(result.context).toContain("约束: avoid slogans");
+  });
+
+  it("uses Chinese labels and asks the model for text-only output", () => {
+    const result = buildContextPreview("帮我写一份 HCI 项目展示讲稿", [card], [
+      { cardId: card.id, mode: "all", selectedFields: [] }
+    ]);
+
+    expect(result.context).toContain("用户选择的 AI 工作习惯");
+    expect(result.context).toContain("语气: formal but natural");
+    expect(result.context).toContain("控制规则");
+    expect(result.context).toContain("当前 AI 接入只生成文本，请不要要求生成图片、PPT 文件或其他非文本产物。");
+    expect(result.context).toContain("当前任务:\n帮我写一份 HCI 项目展示讲稿");
   });
 
   it("keeps all mode deterministic after a caller mutates returned fields", () => {
@@ -53,9 +65,9 @@ describe("buildContextPreview", () => {
     ]);
 
     expect(result.appliedCards[0].fields).toEqual(["styleRules"]);
-    expect(result.context).toContain("Style rules: one key idea per slide");
-    expect(result.context).not.toContain("Tone: formal but natural");
-    expect(result.context).not.toContain("Structure: background");
+    expect(result.context).toContain("风格规则: one key idea per slide");
+    expect(result.context).not.toContain("语气: formal but natural");
+    expect(result.context).not.toContain("结构: background");
   });
 
   it("excludes selected card ids that are absent from the library", () => {
@@ -64,6 +76,6 @@ describe("buildContextPreview", () => {
     ]);
 
     expect(result.appliedCards).toEqual([]);
-    expect(result.context).toContain("No Skill Cards were applied.");
+    expect(result.context).toContain("未应用技能卡片。");
   });
 });

@@ -22,6 +22,7 @@ export type EditableCardPayload = Pick<
   SkillCard,
   | "name"
   | "description"
+  | "presetPrompt"
   | "scenarios"
   | "tone"
   | "structure"
@@ -66,6 +67,7 @@ function toCardCreatePayload(card: CardCreateInput | SuggestedCard): EditableCar
   return {
     name: card.name,
     description: card.description,
+    presetPrompt: card.presetPrompt,
     scenarios: card.scenarios,
     tone: card.tone,
     structure: card.structure,
@@ -86,6 +88,9 @@ function toCardPatchPayload(patch: CardPatchInput): CardPatchInput {
   }
   if (patch.description !== undefined) {
     payload.description = patch.description;
+  }
+  if (patch.presetPrompt !== undefined) {
+    payload.presetPrompt = patch.presetPrompt;
   }
   if (patch.scenarios !== undefined) {
     payload.scenarios = patch.scenarios;

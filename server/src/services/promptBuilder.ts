@@ -9,11 +9,17 @@ import type {
 const allFields: readonly SkillField[] = ["tone", "structure", "styleRules", "constraints", "examples"];
 
 const labels: Record<SkillField, string> = {
-  tone: "Tone",
-  structure: "Structure",
-  styleRules: "Style rules",
-  constraints: "Constraints",
-  examples: "Examples"
+  tone: "语气",
+  structure: "结构",
+  styleRules: "风格规则",
+  constraints: "约束",
+  examples: "示例"
+};
+
+const modeLabels: Record<SelectedCard["mode"], string> = {
+  all: "全部应用",
+  partial: "部分字段",
+  temporary: "仅本次任务"
 };
 
 export function buildContextPreview(
@@ -40,10 +46,14 @@ export function buildContextPreview(
     });
 
     const lines = [
-      `[Skill Card: ${card.name}]`,
-      `Apply mode: ${selection.mode}`,
-      `Scenarios: ${card.scenarios.join(", ")}`
+      `[技能卡片: ${card.name}]`,
+      `应用方式: ${modeLabels[selection.mode]}`,
+      `适用场景: ${card.scenarios.join(", ")}`
     ];
+
+    if (card.presetPrompt) {
+      lines.push(`预设提示词: ${card.presetPrompt}`);
+    }
 
     for (const field of fields) {
       const values = card[field];
@@ -55,21 +65,22 @@ export function buildContextPreview(
     blocks.push(lines.join("\n"));
   }
 
-  const body = blocks.length > 0 ? blocks.join("\n\n") : "No Skill Cards were applied.";
+  const body = blocks.length > 0 ? blocks.join("\n\n") : "未应用技能卡片。";
 
   return {
     appliedCards,
     context: [
-      "User-selected AI work habits:",
+      "用户选择的 AI 工作习惯:",
       body,
       "",
-      "Control rules:",
-      "- The current task overrides long-term habits when they conflict.",
-      "- Partial mode includes only the fields listed in the selection.",
-      "- Temporary mode applies only to this generation and does not save a new habit automatically.",
-      "- A suggested habit requires explicit user confirmation before it is saved.",
+      "控制规则:",
+      "- 当前任务与长期习惯冲突时，以当前任务为准。",
+      "- 部分应用只包含用户勾选的字段。",
+      "- 仅本次任务不会自动保存为长期习惯。",
+      "- 新习惯建议必须由用户明确确认后才能保存。",
+      "- 当前 AI 接入只生成文本，请不要要求生成图片、PPT 文件或其他非文本产物。",
       "",
-      "Current user task:",
+      "当前任务:",
       task
     ].join("\n")
   };

@@ -6,12 +6,12 @@ import { api } from "../api/client";
 import { PrivacyBadge } from "../components/PrivacyBadge";
 
 const snapshotFields = [
-  { key: "scenarios", label: "Scenarios" },
-  { key: "tone", label: "Tone" },
-  { key: "structure", label: "Structure" },
-  { key: "styleRules", label: "Style rules" },
-  { key: "constraints", label: "Constraints" },
-  { key: "examples", label: "Examples" }
+  { key: "scenarios", label: "适用场景" },
+  { key: "tone", label: "语气" },
+  { key: "structure", label: "结构" },
+  { key: "styleRules", label: "风格规则" },
+  { key: "constraints", label: "约束" },
+  { key: "examples", label: "示例" }
 ] as const;
 
 type SnapshotField = (typeof snapshotFields)[number]["key"];
@@ -32,7 +32,7 @@ function errorMessage(error: unknown, fallback: string) {
 }
 
 function formatDate(value?: string) {
-  return value ? new Date(value).toLocaleString() : "Not set";
+  return value ? new Date(value).toLocaleString("zh-CN") : "未设置";
 }
 
 function ListField({ card, field, label }: { card: SkillCard; field: SnapshotField; label: string }) {
@@ -48,7 +48,7 @@ function ListField({ card, field, label }: { card: SkillCard; field: SnapshotFie
           ))}
         </ul>
       ) : (
-        <p>No {label.toLowerCase()} captured.</p>
+        <p>没有记录{label}。</p>
       )}
     </section>
   );
@@ -76,7 +76,7 @@ export function SharePreview() {
 
     async function loadShare() {
       if (!shareId) {
-        setError("Missing share id.");
+        setError("缺少分享 ID。");
         setIsLoading(false);
         return;
       }
@@ -90,7 +90,7 @@ export function SharePreview() {
         setShare(nextShare);
       } catch (loadError) {
         if (activeShareIdRef.current === shareId && loadRequestIdRef.current === requestId) {
-          setError(errorMessage(loadError, "Unable to load share preview."));
+          setError(errorMessage(loadError, "无法加载分享预览。"));
         }
       } finally {
         if (activeShareIdRef.current === shareId && loadRequestIdRef.current === requestId) {
@@ -125,10 +125,10 @@ export function SharePreview() {
         return;
       }
 
-      setOperation({ error: null, message: `Imported as ${card.name}.`, status: "idle" });
+      setOperation({ error: null, message: `已导入为 ${card.name}。`, status: "idle" });
     } catch (importError) {
       if (activeShareIdRef.current === shareId && operationRequestIdRef.current === requestId) {
-        setOperation({ error: errorMessage(importError, "Unable to import share."), message: null, status: "idle" });
+        setOperation({ error: errorMessage(importError, "无法导入分享。"), message: null, status: "idle" });
       }
     }
   }
@@ -139,7 +139,7 @@ export function SharePreview() {
     }
 
     const requestId = operationRequestIdRef.current + 1;
-    const forkName = `${share.snapshot.name} Fork`;
+    const forkName = `${share.snapshot.name} 副本`;
     operationRequestIdRef.current = requestId;
     setOperation({ error: null, message: null, status: "forking" });
 
@@ -149,10 +149,10 @@ export function SharePreview() {
         return;
       }
 
-      setOperation({ error: null, message: `Forked as ${card.name}.`, status: "idle" });
+      setOperation({ error: null, message: `已复刻为 ${card.name}。`, status: "idle" });
     } catch (forkError) {
       if (activeShareIdRef.current === shareId && operationRequestIdRef.current === requestId) {
-        setOperation({ error: errorMessage(forkError, "Unable to fork share."), message: null, status: "idle" });
+        setOperation({ error: errorMessage(forkError, "无法复刻分享。"), message: null, status: "idle" });
       }
     }
   }
@@ -164,13 +164,13 @@ export function SharePreview() {
     <div className="stack">
       <section className="page-title">
         <div>
-          <h1>{snapshot ? snapshot.name : "Share Preview"}</h1>
-          <p>Preview, import, or fork a shared Skill Card snapshot.</p>
+          <h1>{snapshot ? snapshot.name : "分享预览"}</h1>
+          <p>预览、导入或复刻一张分享出来的技能卡片快照。</p>
         </div>
         {snapshot ? <PrivacyBadge privacy={snapshot.privacy} /> : null}
       </section>
 
-      {isLoading ? <div className="panel">Loading share preview...</div> : null}
+      {isLoading ? <div className="panel">正在加载分享预览...</div> : null}
       {!isLoading && error ? (
         <div className="panel" role="alert">
           {error}
@@ -182,15 +182,16 @@ export function SharePreview() {
           <div className="stack">
             <section className="panel stack">
               <div className="button-row">
-                <span className="badge link">Preview-only snapshot</span>
-                <span className="badge">{share.importCount} imports</span>
+                <span className="badge link">只读快照</span>
+                <span className="badge">{share.importCount} 次导入</span>
               </div>
 
               <p>{snapshot.description}</p>
-              <p>Importing creates a local user-owned copy. Forking starts from this snapshot and saves a private editable copy.</p>
+              {snapshot.presetPrompt ? <p>{snapshot.presetPrompt}</p> : null}
+              <p>导入会创建本地副本；复刻会从此快照创建一个私有可编辑版本。</p>
 
               {snapshot.tags.length > 0 ? (
-                <div className="tag-row" aria-label="Snapshot tags">
+                <div className="tag-row" aria-label="快照标签">
                   {snapshot.tags.map((tag) => (
                     <span className="tag" key={tag}>
                       {tag}
@@ -202,11 +203,11 @@ export function SharePreview() {
               <div className="button-row">
                 <button className="button primary" type="button" onClick={handleImport} disabled={isOperationInFlight}>
                   <Import size={16} aria-hidden="true" />
-                  {operation.status === "importing" ? "Importing" : "Import"}
+                  {operation.status === "importing" ? "导入中" : "导入"}
                 </button>
                 <button className="button subtle" type="button" onClick={handleFork} disabled={isOperationInFlight}>
                   <GitFork size={16} aria-hidden="true" />
-                  {operation.status === "forking" ? "Forking" : "Fork and Edit"}
+                  {operation.status === "forking" ? "复刻中" : "复刻并编辑"}
                 </button>
               </div>
 
@@ -215,24 +216,24 @@ export function SharePreview() {
             </section>
 
             <section className="panel stack">
-              <h2>Snapshot fields</h2>
+              <h2>快照字段</h2>
               <div className="tag-row">
-                <span className="tag">{snapshot.usageCount} uses</span>
-                <span className="tag">Created {formatDate(snapshot.createdAt)}</span>
-                <span className="tag">Updated {formatDate(snapshot.updatedAt)}</span>
-                <span className="tag">Last used {formatDate(snapshot.lastUsedAt)}</span>
-                <span className="tag">Shared {formatDate(share.createdAt)}</span>
-                <span className="tag">Expires {formatDate(share.expiresAt)}</span>
+                <span className="tag">{snapshot.usageCount} 次使用</span>
+                <span className="tag">创建于 {formatDate(snapshot.createdAt)}</span>
+                <span className="tag">更新于 {formatDate(snapshot.updatedAt)}</span>
+                <span className="tag">上次使用 {formatDate(snapshot.lastUsedAt)}</span>
+                <span className="tag">分享于 {formatDate(share.createdAt)}</span>
+                <span className="tag">过期于 {formatDate(share.expiresAt)}</span>
               </div>
             </section>
 
             <section className="panel stack">
-              <h2>Compatibility</h2>
+              <h2>适配度</h2>
               <div className="tag-row">
-                <span className="tag">{snapshot.compatibility.chat}% chat</span>
+                <span className="tag">{snapshot.compatibility.chat}% 对话</span>
                 <span className="tag">{snapshot.compatibility.ppt}% PPT</span>
-                <span className="tag">{snapshot.compatibility.writing}% writing</span>
-                <span className="tag">{snapshot.compatibility.coding}% coding</span>
+                <span className="tag">{snapshot.compatibility.writing}% 写作</span>
+                <span className="tag">{snapshot.compatibility.coding}% 编程</span>
               </div>
             </section>
           </div>

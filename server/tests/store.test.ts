@@ -30,6 +30,25 @@ describe("json store and card service", () => {
     expect(db.sessions).toEqual([]);
   });
 
+  it("seeds Chinese preset cards with text-only preset prompts", async () => {
+    const store = createJsonStore({
+      dbPath: path.join(tempDir, "db.json"),
+      seedCardsPath: path.resolve("src/data/seedCards.json")
+    });
+
+    const db = await store.read();
+    const cards = db.cards as Array<SkillCard & { presetPrompt?: string }>;
+
+    expect(cards.map((card) => card.name)).toEqual([
+      "课堂展示助手",
+      "答辩表达助手",
+      "中文邮件助手",
+      "开放设计文本助手"
+    ]);
+    expect(cards.every((card) => card.presetPrompt?.includes("只输出文本"))).toBe(true);
+    expect(cards.every((card) => card.presetPrompt && card.presetPrompt.length > 20)).toBe(true);
+  });
+
   it("rejects malformed existing database JSON without overwriting it", async () => {
     const dbPath = path.join(tempDir, "db.json");
     const malformedJson = "{ not json";
@@ -138,7 +157,7 @@ describe("json store and card service", () => {
         expect.objectContaining({
           type: "created",
           cardId: created.id,
-          title: "Created Skill Card",
+          title: "创建技能卡片",
           detail: "Concurrent Habit"
         })
       ])
@@ -208,15 +227,15 @@ describe("json store and card service", () => {
     expect(db.timeline.slice(0, 3).map((event) => event.type)).toEqual(["used", "updated", "created"]);
     expect(db.timeline.slice(0, 3).map((event) => event.cardId)).toEqual([created.id, created.id, created.id]);
     expect(db.timeline[0]).toMatchObject({
-      title: "Used Skill Card",
+      title: "使用技能卡片",
       detail: "Timeline Habit"
     });
     expect(db.timeline[1]).toMatchObject({
-      title: "Updated Skill Card",
+      title: "更新技能卡片",
       detail: "Timeline Habit"
     });
     expect(db.timeline[2]).toMatchObject({
-      title: "Created Skill Card",
+      title: "创建技能卡片",
       detail: "Timeline Habit"
     });
   });

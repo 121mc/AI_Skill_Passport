@@ -7,7 +7,7 @@ import { recommendCards } from "../src/services/recommend.js";
 const demoTask = "帮我为 HCI 课程做一个 8 页项目展示 PPT 大纲，主题是 AI Skill Passport。";
 
 describe("recommendCards", () => {
-  it("ranks Classroom Presentation and Minimal Visual Style highest for the demo task", async () => {
+  it("ranks classroom and open design text cards highest for the demo task", async () => {
     const cards = JSON.parse(await readFile(path.resolve("src/data/seedCards.json"), "utf8")) as SkillCard[];
 
     const result = recommendCards(demoTask, cards);
@@ -16,7 +16,7 @@ describe("recommendCards", () => {
       "classroom-presentation",
       "minimal-visual-style"
     ]);
-    expect(result[0].reasons.join(" ")).toContain("ppt");
+    expect(result[0].reasons.join(" ")).toContain("PPT");
     expect(result[0].score).toBeGreaterThan(result[2].score);
   });
 
@@ -46,8 +46,8 @@ describe("recommendCards", () => {
       })
     ]);
 
-    expect(result[0].reasons.join(" ")).toContain("Task matched PPT terms; card supports presentation");
-    expect(result[0].reasons.join(" ")).not.toContain("Matched ppt keyword");
+    expect(result[0].reasons.join(" ")).toContain("任务包含 PPT 相关词；卡片支持 presentation");
+    expect(result[0].reasons.join(" ")).not.toContain("匹配标签「ppt」");
   });
 });
 

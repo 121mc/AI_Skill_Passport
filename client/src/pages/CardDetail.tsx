@@ -11,13 +11,13 @@ type ArrayField = (typeof arrayFields)[number];
 type ArrayDrafts = Record<ArrayField, string>;
 
 const fieldLabels: Record<ArrayField, string> = {
-  scenarios: "Scenarios",
-  tone: "Tone",
-  structure: "Structure",
-  styleRules: "Style rules",
-  constraints: "Constraints",
-  examples: "Examples",
-  tags: "Tags"
+  scenarios: "适用场景",
+  tone: "语气",
+  structure: "结构",
+  styleRules: "风格规则",
+  constraints: "约束",
+  examples: "示例",
+  tags: "标签"
 };
 
 function parseLines(value: string) {
@@ -91,7 +91,7 @@ export function CardDetail() {
       setIsSharing(false);
 
       if (!cardId) {
-        setError("Missing card id.");
+        setError("缺少卡片 ID。");
         return;
       }
 
@@ -103,7 +103,7 @@ export function CardDetail() {
         }
       } catch (loadError) {
         if (isMounted && activeCardIdRef.current === cardId && activeRouteTokenRef.current === routeToken) {
-          setError(loadError instanceof Error ? loadError.message : "Unable to load card.");
+          setError(loadError instanceof Error ? loadError.message : "无法加载卡片。");
         }
       }
     }
@@ -151,10 +151,10 @@ export function CardDetail() {
 
       setCard(updatedCard);
       setArrayDrafts(createArrayDrafts(updatedCard));
-      setMessage("Card saved.");
+      setMessage("卡片已保存。");
     } catch (saveError) {
       if (activeCardIdRef.current === requestCardId && activeRouteTokenRef.current === requestRouteToken) {
-        setError(saveError instanceof Error ? saveError.message : "Unable to save card.");
+        setError(saveError instanceof Error ? saveError.message : "无法保存卡片。");
       }
     } finally {
       if (activeCardIdRef.current === requestCardId && activeRouteTokenRef.current === requestRouteToken) {
@@ -184,7 +184,7 @@ export function CardDetail() {
       setShareUrl(share.url);
     } catch (shareError) {
       if (activeCardIdRef.current === requestCardId && activeRouteTokenRef.current === requestRouteToken) {
-        setError(shareError instanceof Error ? shareError.message : "Unable to create share link.");
+        setError(shareError instanceof Error ? shareError.message : "无法创建分享链接。");
       }
     } finally {
       if (activeCardIdRef.current === requestCardId && activeRouteTokenRef.current === requestRouteToken) {
@@ -200,12 +200,12 @@ export function CardDetail() {
       <div className="stack">
         <section className="page-title">
           <div>
-            <h1>Skill Card Detail</h1>
-            <p>Edit habit fields and control how they are applied.</p>
+            <h1>技能卡片详情</h1>
+            <p>编辑习惯字段和默认文本任务。</p>
           </div>
         </section>
 
-        {error ? <div className="panel">{error}</div> : <div className="panel">Loading card...</div>}
+        {error ? <div className="panel">{error}</div> : <div className="panel">正在加载卡片...</div>}
       </div>
     );
   }
@@ -215,7 +215,7 @@ export function CardDetail() {
       <section className="page-title">
         <div>
           <h1>{loadedCard.name}</h1>
-          <p>Edit habit fields and control how they are applied.</p>
+          <p>编辑习惯字段和默认文本任务。</p>
         </div>
         <PrivacyBadge privacy={loadedCard.privacy} />
       </section>
@@ -224,7 +224,7 @@ export function CardDetail() {
       {message ? <div className="panel">{message}</div> : null}
       {shareUrl ? (
         <div className="panel stack">
-          <strong>Share link ready</strong>
+          <strong>分享链接已生成</strong>
           <a href={shareUrl}>{shareUrl}</a>
         </div>
       ) : null}
@@ -232,12 +232,12 @@ export function CardDetail() {
       <section className="two-column">
         <div className="panel stack">
           <label>
-            Name
+            名称
             <input disabled={isSaving} value={loadedCard.name} onChange={(event) => updateCardField("name", event.target.value)} />
           </label>
 
           <label>
-            Description
+            描述
             <textarea
               disabled={isSaving}
               value={loadedCard.description}
@@ -246,27 +246,36 @@ export function CardDetail() {
           </label>
 
           <label>
-            Privacy
+            预设提示词
+            <textarea
+              disabled={isSaving}
+              value={loadedCard.presetPrompt ?? ""}
+              onChange={(event) => updateCardField("presetPrompt", event.target.value)}
+            />
+          </label>
+
+          <label>
+            可见性
             <select
               disabled={isSaving}
               value={loadedCard.privacy}
               onChange={(event) => updateCardField("privacy", event.target.value as PrivacyLevel)}
             >
-              <option value="private">Private</option>
-              <option value="link">Link share</option>
-              <option value="team">Team</option>
-              <option value="public">Public demo</option>
+              <option value="private">私有</option>
+              <option value="link">链接分享</option>
+              <option value="team">团队</option>
+              <option value="public">公开演示</option>
             </select>
           </label>
 
           <div className="button-row">
             <button className="button primary" type="button" onClick={handleSave} disabled={isSaving || isSharing}>
               <Save size={16} aria-hidden="true" />
-              {isSaving ? "Saving" : "Save"}
+              {isSaving ? "保存中" : "保存"}
             </button>
             <button className="button subtle" type="button" onClick={handleShare} disabled={isSharing || isSaving}>
               <Share2 size={16} aria-hidden="true" />
-              {isSharing ? "Sharing" : "Share"}
+              {isSharing ? "分享中" : "分享"}
             </button>
           </div>
         </div>

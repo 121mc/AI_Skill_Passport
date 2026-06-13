@@ -20,7 +20,7 @@ export function createShareService(store: JsonStore, clientOrigin: string) {
           importCount: 0
         };
         db.shares.unshift(share);
-        db.timeline.unshift(event("shared", "Created share link", card.name, { cardId }));
+        db.timeline.unshift(event("shared", "创建分享链接", card.name, { cardId }));
         return {
           shareId,
           url: `${clientOrigin}/share/${shareId}`
@@ -67,7 +67,7 @@ async function copyFromShare(
     db.cards.push(copied);
     share.importCount += 1;
     db.timeline.unshift(
-      event("imported", idPrefix === "fork_" ? "Forked shared Skill Card" : "Imported shared Skill Card", copied.name, {
+      event("imported", idPrefix === "fork_" ? "复刻分享技能卡片" : "导入分享技能卡片", copied.name, {
         cardId: copied.id
       })
     );

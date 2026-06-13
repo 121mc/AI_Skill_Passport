@@ -31,7 +31,7 @@ export function createCardService(store: JsonStore) {
           updatedAt: now
         };
         db.cards.push(card);
-        db.timeline.unshift(event("created", "Created Skill Card", card.name, { cardId: card.id }));
+        db.timeline.unshift(event("created", "创建技能卡片", card.name, { cardId: card.id }));
         return card;
       });
     },
@@ -43,7 +43,7 @@ export function createCardService(store: JsonStore) {
           throw new Error(`Skill Card not found: ${id}`);
         }
         Object.assign(card, patch, { updatedAt: new Date().toISOString() });
-        db.timeline.unshift(event("updated", "Updated Skill Card", card.name, { cardId: id }));
+        db.timeline.unshift(event("updated", "更新技能卡片", card.name, { cardId: id }));
         return card;
       });
     },
@@ -57,7 +57,7 @@ export function createCardService(store: JsonStore) {
         card.usageCount += 1;
         card.lastUsedAt = new Date().toISOString();
         card.updatedAt = card.lastUsedAt;
-        db.timeline.unshift(event("used", "Used Skill Card", card.name, { cardId: id }));
+        db.timeline.unshift(event("used", "使用技能卡片", card.name, { cardId: id }));
         return card;
       });
     },

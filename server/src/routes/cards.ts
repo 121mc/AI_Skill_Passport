@@ -16,6 +16,7 @@ const compatibilityFields = ["chat", "ppt", "writing", "coding"] as const;
 const createFields = new Set([
   "name",
   "description",
+  "presetPrompt",
   "scenarios",
   "tone",
   "structure",
@@ -29,6 +30,7 @@ const createFields = new Set([
 const patchFields = new Set([
   "name",
   "description",
+  "presetPrompt",
   "scenarios",
   "tone",
   "structure",
@@ -113,9 +115,12 @@ function parseNewCard(body: unknown): NewSkillCard {
     }
   }
 
+  const presetPrompt = optionalString(value, "presetPrompt", "Invalid Skill Card");
+
   return {
     name: requiredString(value, "name", "Invalid Skill Card"),
     description: requiredString(value, "description", "Invalid Skill Card"),
+    ...(presetPrompt !== undefined ? { presetPrompt } : {}),
     scenarios: requiredStringArray(value, "scenarios", "Invalid Skill Card"),
     tone: requiredStringArray(value, "tone", "Invalid Skill Card"),
     structure: requiredStringArray(value, "structure", "Invalid Skill Card"),
@@ -143,6 +148,9 @@ function parseCardPatch(body: unknown): CardPatch {
   }
   if ("description" in value) {
     patch.description = requiredString(value, "description", "Invalid Skill Card patch");
+  }
+  if ("presetPrompt" in value) {
+    patch.presetPrompt = requiredString(value, "presetPrompt", "Invalid Skill Card patch");
   }
   for (const field of arrayFields) {
     if (field in value) {
@@ -175,6 +183,17 @@ function recordFrom(value: unknown, publicMessage: string): UnknownRecord {
 
 function requiredString(value: UnknownRecord, key: string, publicMessage: string): string {
   const field = value[key];
+  if (typeof field !== "string") {
+    throw publicHttpError(400, publicMessage);
+  }
+  return field;
+}
+
+function optionalString(value: UnknownRecord, key: string, publicMessage: string): string | undefined {
+  const field = value[key];
+  if (field === undefined) {
+    return undefined;
+  }
   if (typeof field !== "string") {
     throw publicHttpError(400, publicMessage);
   }
